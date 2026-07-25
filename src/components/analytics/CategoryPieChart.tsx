@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import {
     ResponsiveContainer,
     PieChart,
@@ -6,8 +7,9 @@ import {
     Tooltip,
     Legend,
 } from "recharts"
-import { categoryData } from "@/constants/analytics"
+import { analyticsService, type CategoryData } from "@/services/apiServices"
 import { useTranslation } from "react-i18next"
+import { toast } from "sonner"
 
 
 
@@ -21,14 +23,26 @@ const COLORS = [
 
 export default function CategoryPieChart(){
     const { t } = useTranslation()
+    const [data, setData] = useState<CategoryData[]>([])
 
-    const translatedData = categoryData.map((item)=>({
-        ...item,
-        name: t(item.name)
-    }))
+
+
+    useEffect(()=>{
+        analyticsService.getCategories().then(res=>{
+            const translated = res.map(item=>({
+                ...item,
+                name: t(item.name)
+            }))
+            setData(translated)
+        }).catch((e:any)=>{
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        })
+    }, [])
+
+    
 
     return(
-        <div className="rounded-xl bh-white p-6 shadow-sm">
+        <div className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-6 text-xl font-semibold">
                 {t("Product Categories")}
             </h2>
@@ -36,13 +50,13 @@ export default function CategoryPieChart(){
                 <ResponsiveContainer width='100%' height='100%'>
                     <PieChart>
                         <Pie
-                            data={translatedData}
+                            data={data}
                             dataKey='value'
                             nameKey='name'
                             outerRadius={110}
                             label>
                             
-                            {categoryData.map((_, index)=>(
+                            {data.map((_, index)=>(
                                 <Cell
                                     key={index}
                                     fill={COLORS[index % COLORS.length]}/>

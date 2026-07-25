@@ -2,6 +2,7 @@ import Button from "@/components/ui/Button"
 import { useAuth } from "@/context/AuthContext"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
+import { toast } from "sonner"
 
 
 
@@ -12,34 +13,46 @@ export default function SecurityForm() {
     const [currentPassword, setCurrentPassword] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [confirmPassword, setConfirmPassword] = useState<string>('')
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
     
     
     
-    function changePassord(){
-        if(currentPassword !== user.password){
-            alert('Current password incorrect')
-
-            return
-        }else if(password !== confirmPassword){
-            alert('The password and its confirmation does not match')
-
+    async function handleChangePassword(){
+        if(!user){
+            toast.error(t('User is not authenticated'))
             return
         }
 
-        updatePassword(password)
-        alert('Password changed successfully')
+        if(!currentPassword || !password || !confirmPassword){
+            toast.error(t('Pleasde fill in all the fields'))
+            return
+        }
 
-        setCurrentPassword('')
-        setPassword('')
-        setConfirmPassword('')
+        if(password !== confirmPassword){
+            toast(t('The password and its confirmation do not match'))
+        }
+
+        try{
+            setIsSubmitting(true)
+
+            await updatePassword({ currentPassword, newPassword: password })
+            toast.success(t('Password changed successfully'))
+            
+            setCurrentPassword('')
+            setPassword('')
+            setConfirmPassword('')
+        }catch(e:any){
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        }finally{
+            setIsSubmitting(false)
+        }
     }
 
 
 
     return (
-        <section className="rounded-xl bg-white p-6 shadow-sm">
-            
+        <section className="rounded-xl bg-white p-6 shadow-sm">            
             <h2 className="mb-6 text-xl font-semibold">{t('Security')}</h2>
             <div className="space-y-5">
                 <input
@@ -65,7 +78,9 @@ export default function SecurityForm() {
             </div>
 
             <div className="mt-6 flex justify-end">
-                <Button onClick={changePassord}>{t('Update Password')}</Button>
+                <Button 
+                    disabled={isSubmitting}
+                    onClick={handleChangePassword}>{t('Update Password')}</Button>
             </div>
 
         </section>

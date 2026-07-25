@@ -1,3 +1,5 @@
+import { useAuth } from "@/context/AuthContext"
+import LoginPage from "@/pages/login/LoginPage"
 import { Outlet } from "react-router-dom"
 import Header from "../components/layout/Header"
 import Sidebar from "../components/layout/Sidebar"
@@ -5,6 +7,22 @@ import Sidebar from "../components/layout/Sidebar"
 
 
 export default function AppLayout(){
+    const { user, token, isLoading } = useAuth()
+
+    if (isLoading) {
+        return (
+        <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500">
+            Loading session...
+        </div>
+        )
+    }
+
+
+    if (!token || !user) {
+        return <LoginPage />
+    }
+
+
     return(
         <div className="flex min-h-screen">
             <Sidebar/>

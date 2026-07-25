@@ -12,7 +12,12 @@
     "notifications": "Notifications",
     "emailNotifications": "Email Notifications",
     "pushNotifications": "Push Notifications",
-    "marketingEmails": "Marketing Emails",
+
+    "emailNotifs": "Email notification",
+    "marketingEmails": "Marketing emails",
+    "pushNotifs": "Push notification",
+    "enabledMessage": "{{feature}} active",
+    "disabledMessage": "{{feature}} inactive",
 
     "jan": "Jan",
     "feb": "Feb",

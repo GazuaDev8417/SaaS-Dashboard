@@ -107,8 +107,17 @@ export default function NotificationMenu(){
 
             <div
                 className={`
-                    absolute
-                    right-0
+                    fixed
+                    left-4
+                    right-4
+                    top-16
+                    z-50
+                    sm:absolute
+                    sm:left-auto
+                    sm:right-0
+                    sm:top-auto
+                    sm:w-80
+                    sm:max-w-none
                     mt-2
                     w-72
                     max-w-[calc(100vw-2rem)]

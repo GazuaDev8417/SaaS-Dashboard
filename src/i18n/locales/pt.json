@@ -31,6 +31,11 @@
     "Price": "Preço",
     "Stock": "Estoque",
 
+    "emailNotifs": "notificações por e-mail",
+    "marketingEmails": "e-mails de marketing",
+    "pushNotifs": "notificações push",
+    "enabledMessage": "{{feature}} ativadas",
+    "disabledMessage": "{{feature}} desativadas",
 
     "Manage your customer base": "Gerencia sua base de clientes",
     "Search customers...": "Busca por clientes",

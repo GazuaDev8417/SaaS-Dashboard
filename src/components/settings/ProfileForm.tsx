@@ -2,24 +2,37 @@ import Button from "@/components/ui/Button"
 import { useAuth } from "@/context/AuthContext"
 import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
+import { toast } from "sonner"
 
 
 
 
 export default function ProfileForm(){
     const { updateProfile, user } = useAuth()
-    const [name, setName] = useState<string>(user.name)
-    const [email, setEmail] = useState<string>(user.email)
-    const [role, setRole] = useState<string>(user.role)
+    const [name, setName] = useState<string>(user?.name ?? '')
+    const [email, setEmail] = useState<string>(user?.email ?? '')
+    const [role, setRole] = useState<string>(user?.role ?? '')
     const { t } = useTranslation()
 
 
 
     useEffect(() => {
-        setName(user.name)
-        setEmail(user.email)
-        setRole(user.role)
+        if(user){
+            setName(user.name)
+            setEmail(user.email)
+            setRole(user.role)
+        }
     }, [user])
+
+
+    const handleUpdate = async(name:string, email:string, role:string)=>{
+        try{
+            await updateProfile({name, email, role})
+            toast.success('User updated successfully')
+        }catch(e:any){
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        }
+    }
 
 
 
@@ -53,9 +66,7 @@ export default function ProfileForm(){
                     className="w-full rounded-lg border border-slate-300 p-3"/>
             </div>
             <div className="mt-6 flex justify-end">
-                <Button onClick={()=>{
-                    updateProfile({ name, email, role })
-                }}>
+                <Button onClick={() => handleUpdate(name, email, role)}>
                     {t('Save Profile')}
                 </Button>
             </div>

@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom"
-import { useEffect, useState, type SubmitEvent, type ChangeEvent} from "react"
+import { useEffect, useState, type ChangeEvent, type SubmitEvent} from "react"
 import { Mail, Lock } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import Button from "@/components/ui/Button"
+import { toast } from "sonner"
 
 
 
@@ -16,23 +17,21 @@ interface FormData{
 
 
 export default function LoginPage(){
+    const { login, token } = useAuth()
     const navigate = useNavigate()
-    const { user } = useAuth()
     const [checked, setChecked] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const [form, setForm] =useState<FormData>({
-        email: user.email,
-        password: user.password
+        email: 'admin@example.com',
+        password: 'password123' 
     })
     
 
     useEffect(()=>{
-        const isLocalAuth = localStorage.getItem('isAuthenticated') === 'true'
-        const isSessionAuth = sessionStorage.getItem('isAuthenticated') === 'true'
-
-        if(isLocalAuth || isSessionAuth){
-            navigate('/')
-        }
-    }, [navigate])
+        if(token && !isLoading){
+            navigate('/', { replace: true })
+        }                
+    }, [token, navigate])
 
 
 
@@ -42,25 +41,20 @@ export default function LoginPage(){
     }
 
 
-    const login = (e:SubmitEvent<HTMLFormElement>)=>{
+    const handleSubmit = async(e:SubmitEvent<HTMLFormElement>)=>{
         e.preventDefault()
-        
-        if(form.email === user.email && form.password === user.password){
-            const { password, ...userProfile } = user
+        setIsLoading(true)
 
-            if(checked){
-                localStorage.setItem('isAuthenticated', 'true')
-                localStorage.setItem('user', JSON.stringify(userProfile))
-            }else{
-                sessionStorage.setItem('isAuthenticated', 'true')
-                sessionStorage.setItem('user', JSON.stringify(userProfile))
-            }
-
+        try{
+            await login(form)
+            toast.success('Welcome back!')
             navigate('/')
-            return
+        }catch(error:any){
+            const message = error.response?.data?.message || "Invalid email or password"
+            toast.error(message)
+        }finally{
+            setIsLoading(false)
         }
-
-        alert('Invalid email or password')
     }
 
 
@@ -83,7 +77,8 @@ export default function LoginPage(){
                     </p>
 
                     <form 
-                        onSubmit={login}
+                        autoComplete="off"
+                        onSubmit={handleSubmit}
                         className="space-y-5">
                         <div>
                             <label 
@@ -98,6 +93,7 @@ export default function LoginPage(){
                                     className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"/>
                                 <input 
                                     name="email"
+                                    autoComplete="new-password"
                                     value={form.email}
                                     onChange={onChange}
                                     type="email"
@@ -128,6 +124,7 @@ export default function LoginPage(){
                                     className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"/>
                                 
                                 <input
+                                    autoComplete="new-password"
                                     name="password"
                                     value={form.password}
                                     onChange={onChange}
@@ -170,8 +167,9 @@ export default function LoginPage(){
 
                         <Button
                             type="submit"
+                            disabled={isLoading}
                             className="w-full">
-                            Sign in
+                            {isLoading ? 'Signing in...' : 'Sign in'}
                         </Button>
                     </form>
                 </div>

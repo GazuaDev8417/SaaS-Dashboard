@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { analyticsService, type RevenueData } from '@/services/apiServices'
 import {
     ResponsiveContainer,
     LineChart,
@@ -8,22 +10,27 @@ import {
     YAxis
 } from 'recharts'
 import { useTranslation } from "react-i18next"
+import { toast } from 'sonner'
 
 
 
 
 export default function SalesChart(){
     const { t } = useTranslation()
+    const [data, setData] = useState<RevenueData[]>([])
 
 
-    const data = [
-        { month: "Jan", revenue: 4000 },
-        { month: "Feb", revenue: 3000 },
-        { month: "Mar", revenue: 5200 },
-        { month: "Apr", revenue: 4700 },
-        { month: "May", revenue: 6200 },
-        { month: "Jun", revenue: 7100 },
-    ]
+    useEffect(()=>{
+        analyticsService.getRevenue().then(res=>{
+            const translated = res.map(item=>({
+                ...item,
+                month: t(item.month)
+            }))
+            setData(translated)
+        }).catch((e:any)=>{
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        })
+    }, [t])
 
 
     const translatedData = data.map((item)=>({

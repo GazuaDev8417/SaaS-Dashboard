@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
 import { useTranslation } from "react-i18next"
 import {
-    User,
     Settings,
     LogOut,
     ChevronDown
@@ -15,7 +14,7 @@ import {
 export default function UserMenu(){
     const { t } = useTranslation()
     const navigate = useNavigate()
-    const { user } = useAuth()
+    const { user, logout } = useAuth()
     const [open, setOpen] = useState<boolean>(false)
     const menuRef = useRef<HTMLDivElement | null>(null)
 
@@ -57,10 +56,10 @@ export default function UserMenu(){
                     </div>
                     <div className="hidden text-left md:block">
                         <p className="text-sm font-semibold">
-                            {user.name}
+                            {user?.name || 'Guest'}
                         </p>
                         <p className="text-xs text-slate-500">
-                            {t(user.role)}
+                            {t(user?.role || 'Member')}
                         </p>
                     </div>
                     <ChevronDown size={18}/>
@@ -83,37 +82,21 @@ export default function UserMenu(){
                     duration-200
                     ${open ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'}
                 `}>
-                    <button 
-                        onClick={()=>{
-                            navigate('/')
-                            setOpen(false)
-                        }}
-                        className="flex w-full items-center gap-3 px-4 py-3 hover:bg-slate-100 cursor-pointer">
-                    <User size={18}/>
-                        My Profile
-                    </button>
-
+                    
                     <button 
                         onClick={()=>{
                             navigate('/settings')
                             setOpen(false)
                         }}
                         className="flex w-full items-center gap-3 px-4 py-3 hover:bg-slate-100 cursor-pointer">
-                        <Settings size={18}/>
+                        <Settings size={18}/>   
                         Settings
                     </button>
 
                     <hr/>
 
                     <button
-                        onClick={()=>{
-                            localStorage.removeItem('isAuthenticated')
-                            sessionStorage.removeItem('isAuthenticated')
-                            localStorage.removeItem('user')
-                            sessionStorage.removeItem('user')
-                            navigate('/login')
-                            setOpen(false)
-                        }} 
+                        onClick={()=> logout()} 
                         className="flex w-full items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 cursor-pointer">
                         <LogOut size={18}/>
                         Logout

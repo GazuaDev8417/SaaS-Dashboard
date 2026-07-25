@@ -6,6 +6,7 @@ import { queryClient } from "@/lib/queryClient"
 import { Toaster } from "sonner"
 import { SideBarProvider } from "./context/SideBarContext"
 import { AuthProvider } from "./context/AuthContext"
+import { TimezoneProvider } from "./context/TimezoneContext"
 import router from "./routes/router"
 import '@/i18n'
 
@@ -18,7 +19,9 @@ createRoot(document.getElementById('root')!).render(
         <SideBarProvider>
             <QueryClientProvider client={queryClient}>
                 <AuthProvider>
-                    <RouterProvider router={router}/>
+                    <TimezoneProvider>
+                        <RouterProvider router={router}/>
+                    </TimezoneProvider>
                 </AuthProvider>
                 <Toaster position="top-right" richColors/>
             </QueryClientProvider>

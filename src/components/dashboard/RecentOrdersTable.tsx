@@ -1,49 +1,33 @@
+import { useState, useEffect } from "react"
+import { orderService, type RecentOrder } from "@/services/apiServices"
 import { useTranslation } from "react-i18next"
-
-interface Order{
-    id:number
-    customer:string
-    product:string
-    total:string
-    status: 'completed' | 'pending'
-}
+import { toast } from "sonner"
 
 
-const orders:Order[] = [
-    {
-        id: 1,
-        customer: 'John Smith',
-        product: 'Premium Plan',
-        total: '$120',
-        status: 'completed'
-    },
-    {
-        id: 2,
-        customer: 'Emma Wilson',
-        product: 'Starter Plan',
-        total: '$49',
-        status: 'pending'
-    },
-    {
-        id: 3,
-        customer: 'Michael Brown',
-        product: 'Business Plan',
-        total: '$299',
-        status: 'completed'
-    },
-    {
-        id: 4,
-        customer: 'Sophia Davis',
-        product: 'Enterprise Plan',
-        total: '$599',
-        status: 'pending'
-    }
-]
+
 
 
 
 export default function RecentOrdersTable(){
     const { t } = useTranslation()
+    const [orders, setOrders] = useState<RecentOrder[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+
+
+    useEffect(()=>{
+        orderService.getRecent().then(data=>{
+            setOrders(data)
+        }).catch((e:any)=>{
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        }).finally(() => setLoading(false))
+    }, [])
+
+
+    if(loading){
+        return <p className="py-4 text-sm text-slate-500">{t("Loading...")}</p>
+    }
+
+    
 
     return(
         <div className="overflow-x-auto">

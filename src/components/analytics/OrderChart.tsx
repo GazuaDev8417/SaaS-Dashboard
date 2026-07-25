@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import {
     ResponsiveContainer,
     BarChart,
@@ -8,17 +9,33 @@ import {
     CartesianGrid,
 } from "recharts"
 import { useTranslation } from "react-i18next"
+import { orderService, type OrdersByMonth } from "@/services/apiServices"
+import { toast } from "sonner"
 
 
-import { ordersData } from "@/constants/analytics"
+
 
 export default function OrdersChart() {
     const { t } = useTranslation()
+    const [chartData, setChartData] = useState<OrdersByMonth[]>([])
 
-    const tanslatedData = ordersData.map((item)=>({
-            ...item,
-            month: t(item.month)
-        }))
+
+
+    useEffect(()=>{
+        orderService.getByMonth().then(data=>{
+            const translatedData = data.map(item=>({
+                ...item,
+                month: t(item.month)
+            }))
+            setChartData(translatedData)
+        }).catch((e:any)=>{
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        })
+    }, [t])
+
+
+
+
 
     return (
         <div className="rounded-xl bg-white p-6 shadow-sm">
@@ -31,7 +48,7 @@ export default function OrdersChart() {
 
                 <ResponsiveContainer width="100%" height="100%">
 
-                    <BarChart data={tanslatedData}>
+                    <BarChart data={chartData}>
 
                         <CartesianGrid strokeDasharray="3 3" />
 

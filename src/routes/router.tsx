@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { createBrowserRouter, Navigate } from "react-router-dom"
+import { useAuth } from "@/context/AuthContext"
 import LoginPage from "@/pages/login/LoginPage"
 import AnalyticsPage from "@/pages/analytics/AnalyticsPage"
 import CustomersPage from "@/pages/customers/CustomersPage"
@@ -18,15 +19,21 @@ interface ProtectedRouteProps{
 
 
 function ProtectedRoute({ children }:ProtectedRouteProps){
-    const isAuthenticated =
-        localStorage.getItem('isAuthenticated') === 'true' ||
-        sessionStorage.getItem('isAuthenticated') === 'true'
+    const { token, isLoading } = useAuth()
 
-    if(!isAuthenticated){
-        return <Navigate to='/login' replace/>
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500">
+                Loading session...
+            </div>
+        )
     }
 
-    return children
+    if (!token) {
+        return <Navigate to="/login" replace />
+    }
+
+    return<>{children}</>
 }
 
 const router = createBrowserRouter([

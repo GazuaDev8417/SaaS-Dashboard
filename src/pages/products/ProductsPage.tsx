@@ -1,12 +1,10 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { productService, type Product } from "@/services/apiServices"
 import Button from "@/components/ui/Button"
 import ProductsToolBar from "@/components/products/productsToolBar"
 import ProductsTable from "@/components/products/productsTable"
-import { products as initialProducts } from "@/constants/products"
-import type { Product } from "@/constants/products"
 import ProductModal from "@/components/products/ProductModal"
 import type { ProductFormData } from "@/components/products/ProductModal"
-import type { ProductStatus } from "@/constants/products"
 import { Plus } from "lucide-react"
 import ConfirmDialog from "@/components/common/ConfirmDialog"
 import { useTranslation } from "react-i18next"
@@ -17,7 +15,8 @@ import { toast } from "sonner"
 
 export default function ProductsPage(){
     const { t } = useTranslation()
-    const [products, setProducts] = useState(initialProducts)
+    const [products, setProducts] = useState<Product[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [search, setSearch] = useState<string>('')
     const [category, setCategory] = useState<string>('')
@@ -25,6 +24,28 @@ export default function ProductsPage(){
     const [editingProduct, setEditingProduct] = useState<Product | null>(null)
     const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
     const [productToDelete, setProductToDelete] = useState<Product | null>(null)
+
+
+
+
+    useEffect(()=>{
+        loadProducts()
+    }, [])
+
+
+
+
+    const loadProducts = async()=>{
+        try{
+            setLoading(true)
+            const data = await productService.getAll()
+            setProducts(data)
+        }catch(e:any){
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        }finally{
+            setLoading(false)
+        }
+    }
 
 
 
@@ -37,53 +58,55 @@ export default function ProductsPage(){
     })
 
 
-    const handleAddProduct = (product:ProductFormData)=>{
-        const status:ProductStatus = product.stock > 5 ? 'Active' : 'Low Stock'
-        const newProduct = {
-            id: products.length + 1,
-            ...product,
-            status
+    const handleAddProduct = async(productData:ProductFormData)=>{
+        try{
+            await productService.create(productData)
+            toast.success('Product created successfully')
+            setIsModalOpen(false)
+            loadProducts()
+        }catch(e){
+            toast.error('Failed to create product')
         }
-
-        toast.success('Product created successfully')
-        setProducts((current) => [...current, newProduct])
     }
 
 
-    const handleUpdateProduct = (updateProduct:Product)=>{
-        setProducts((current) =>
-            current.map((product) =>
-                product.id === updateProduct.id
-                    ? updateProduct
-                    : product
-            )
-        )
-
-        toast.success('Product updated successfully')
-        setEditingProduct(null)    
+    const handleUpdateProduct = async(productData:Product)=>{
+        try{
+            await productService.update(productData.id, productData)
+            toast.success('Product updated successfully')
+            setIsModalOpen(false)
+            setEditingProduct(null)
+            loadProducts()
+        }catch(e){
+            toast.error('Failed to update product')
+        }
     }
 
 
-    const handleDeleteProduct = (product:Product)=>{
+    const handleOpenDeleteModal = (product:Product)=>{
         setProductToDelete(product)
-        setIsDeleteOpen(true)        
+        setIsDeleteOpen(true)
     }
 
-    const confirmDeleteProduct = ()=>{
+
+    const confirmDeleteProduct = async()=>{
         if(!productToDelete) return
-
-        setProducts((current) =>
-            current.filter(
-                (product) => product.id !== productToDelete.id
-            )
-        )
-
-
-        toast.success('Product deleted successfully')
-
-        setProductToDelete(null)
-        setIsDeleteOpen(false)
+        
+        try{
+            await productService.delete(productToDelete.id)
+            toast.success('Product deleted successfully')
+            loadProducts()
+        }catch(e){
+            toast.error('Failed to delete product')
+        }finally{
+            setProductToDelete(null)
+            setIsDeleteOpen(false)
+        }
     }
+    
+    
+
+    
 
     return(
         <section className="space-y-6">
@@ -110,13 +133,17 @@ export default function ProductsPage(){
                 status={status}
                 onStatusChange={setStatus}
                 />
-            <ProductsTable 
-                products={filteredProducts}
-                onEdit={(product)=>{
-                    setEditingProduct(product)
-                    setIsModalOpen(true)
-                }}
-                onDelete={handleDeleteProduct}/>
+            {loading ? (
+                <div className="p-8 text-center text-slate-500">Loading products...</div>
+            ) : (
+                <ProductsTable 
+                    products={filteredProducts}
+                    onEdit={(product)=>{
+                        setEditingProduct(product)
+                        setIsModalOpen(true)
+                    }}
+                    onDelete={handleOpenDeleteModal}/>
+            )}
             <ProductModal 
                 open={isModalOpen} 
                 onClose={() =>{

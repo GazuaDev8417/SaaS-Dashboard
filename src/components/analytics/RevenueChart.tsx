@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { analyticsService, type RevenueData } from '@/services/apiServices'
 import {
     ResponsiveContainer,
     LineChart,
@@ -7,20 +9,30 @@ import {
     Tooltip,
     CartesianGrid
 } from 'recharts'
-import { revenueData } from '@/constants/analytics'
 import { useTranslation } from "react-i18next"
+import { toast } from 'sonner'
 
 
 
 
 export default function RevenueChart(){
     const { t } = useTranslation()
+    const [data, setData] = useState<RevenueData[]>([])
 
-    const tanslatedData = revenueData.map((item)=>({
-        ...item,
-        month: t(item.month)
-    }))
 
+    useEffect(()=>{
+        analyticsService.getRevenue().then(res=>{
+            const translated = res.map(item=>({
+                ...item,
+                month: t(item.month)
+            }))
+            setData(translated)
+        }).catch((e:any)=>{
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        })
+    }, [t])
+
+    
     return(
         <div className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-6 text-xl font-semibold">
@@ -28,7 +40,7 @@ export default function RevenueChart(){
             </h2>
             <div className="h-80">
                 <ResponsiveContainer width='100%' height='100%'>
-                    <LineChart data={tanslatedData}>
+                    <LineChart data={data}>
                         <CartesianGrid strokeDasharray='3 3'/>
                         <XAxis dataKey='month'/>
                         <YAxis/>
