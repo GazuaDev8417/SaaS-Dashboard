@@ -58,9 +58,6 @@ export interface Customer{
 export const authService = {
     login: async(credentials: { email:string, password:string })=>{
         const response = await api.post('/auth/login', credentials)
-        if(response.data.token){
-            localStorage.setItem('token', response.data.token)
-        }
         return response.data
     },
     

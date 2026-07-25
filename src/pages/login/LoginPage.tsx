@@ -11,6 +11,7 @@ import { toast } from "sonner"
 interface FormData{
     email:string
     password:string
+    rememberMe:boolean
 }
 
 
@@ -23,7 +24,8 @@ export default function LoginPage(){
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [form, setForm] =useState<FormData>({
         email: 'admin@example.com',
-        password: 'password123' 
+        password: 'password123', 
+        rememberMe: false
     })
     
 
@@ -149,8 +151,9 @@ export default function LoginPage(){
                             <label className="flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="checkbox" 
-                                    checked={checked}
-                                    onChange={(e) => setChecked(e.target.checked)}
+                                    name="rememberMe"
+                                    checked={form.rememberMe}
+                                    onChange={(e) => setForm({ ...form, rememberMe: e.target.checked })}
                                     className="rounded border-slate-300" />
                                 Remember me
                             </label>
