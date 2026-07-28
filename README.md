@@ -180,7 +180,8 @@ This project is licensed under the MIT License.
 
 ## 👨‍💻 Author
 
-Developed by **Flamarion França**.
+Developed by **Flamarion França**. \
+Portfolio page: https://portfolio-vtu0.onrender.com
 
 If you enjoyed this project, consider giving it a ⭐ on GitHub.
 

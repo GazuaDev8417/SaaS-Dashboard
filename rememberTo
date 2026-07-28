@@ -1,1 +1,2 @@
-When everything finishes remember to add the check verification on login page to persist or not logged in
+Notification menu in the Header is still in pure frontend. It must to have a connexion to the API and fetch the notifications
+to frontend in the NOtificationMenu component

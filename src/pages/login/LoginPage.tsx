@@ -52,7 +52,7 @@ export default function LoginPage(){
             toast.success('Welcome back!')
             navigate('/')
         }catch(error:any){
-            const message = error.response?.data?.message || "Invalid email or password"
+            const message = error?.response?.data?.message || error?.response?.data || error?.message
             toast.error(message)
         }finally{
             setIsLoading(false)

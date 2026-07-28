@@ -75,7 +75,8 @@ export default function Sidebar(){
             left-0
             top-0
             z-50
-            min-h-screen
+            /* min-h-screen */
+            h-screen
             w-72
             bg-slate-900
             p-4
@@ -84,7 +85,8 @@ export default function Sidebar(){
             ${
                 isOpen ? 'translate-x-0' : '-translate-x-full'
             }
-            lg:relative
+            lg:sticky
+            lg:top-0
             lg:translate-x-0
             lg:shrink-0
         `}>

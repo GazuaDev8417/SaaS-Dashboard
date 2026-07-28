@@ -65,7 +65,7 @@ export default function ProductsPage(){
             setIsModalOpen(false)
             loadProducts()
         }catch(e){
-            toast.error('Failed to create product')
+            toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
         }
     }
 
@@ -78,7 +78,7 @@ export default function ProductsPage(){
             setEditingProduct(null)
             loadProducts()
         }catch(e){
-            toast.error('Failed to update product')
+            toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
         }
     }
 
@@ -97,7 +97,7 @@ export default function ProductsPage(){
             toast.success('Product deleted successfully')
             loadProducts()
         }catch(e){
-            toast.error('Failed to delete product')
+            toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
         }finally{
             setProductToDelete(null)
             setIsDeleteOpen(false)
