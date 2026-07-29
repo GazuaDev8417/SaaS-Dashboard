@@ -1,21 +1,10 @@
-import { useAuth } from "@/context/AuthContext"
 import { Outlet } from "react-router-dom"
 import Header from "../components/layout/Header"
 import Sidebar from "../components/layout/Sidebar"
 
 
 
-export default function AppLayout(){
-    const { isLoading } = useAuth()
-
-    if (isLoading) {
-        return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500">
-            Loading session...
-        </div>
-        )
-    }
-    
+export default function AppLayout(){   
 
 
     return(

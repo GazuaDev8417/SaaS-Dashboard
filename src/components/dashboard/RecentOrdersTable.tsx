@@ -13,6 +13,8 @@ export default function RecentOrdersTable(){
     const [orders, setOrders] = useState<RecentOrder[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
+    
+
 
     useEffect(()=>{
         orderService.getRecent().then(data=>{
@@ -50,7 +52,7 @@ export default function RecentOrdersTable(){
                             
                             <td className="py-4">{order.customerName}</td>
                             <td className="py-4">{t(order.product)}</td>
-                            <td className="py-4">{order.total}</td>
+                            <td className="py-4">$ {order.total}</td>
 
                             <td>
                                 <span className={

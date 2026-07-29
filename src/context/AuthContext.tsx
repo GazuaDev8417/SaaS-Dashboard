@@ -36,26 +36,27 @@ export function AuthProvider({ children }:{ children:ReactNode}){
 
 
 
+
     useEffect(() => {
         async function loadUser() {
             const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token')
             
             if (storedToken) {
-                try {                    
+                try {      
+                    setToken(storedToken)
+                    
                     const userData = await authService.getCurrentUser()
                     setUser(userData)
-                    setToken(storedToken)
-                } catch (e:any) {
-                    console.error(e?.response?.data?.message || e?.response?.data || e?.message)
+                } catch (e: any) {
+                    console.error("Session load failed:", e?.response?.data?.message || e?.message)
                     logout()
                 } 
-            }
-            
-            setIsLoading(false)            
+            }          
         }
 
         loadUser()
     }, [])
+    
 
 
 
@@ -64,6 +65,10 @@ export function AuthProvider({ children }:{ children:ReactNode}){
         const storage = credentials.rememberMe ? localStorage : sessionStorage
         
         storage.setItem('token', data.token)
+
+        const userData = await authService.getCurrentUser()
+        setToken(data.token)
+        setUser(userData)
     }
 
 

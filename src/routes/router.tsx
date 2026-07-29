@@ -19,15 +19,9 @@ interface ProtectedRouteProps{
 
 
 function ProtectedRoute({ children }:ProtectedRouteProps){
-    const { user, token, isLoading } = useAuth()
-
-    if (isLoading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500">
-                Loading session...
-            </div>
-        )
-    }
+    const { user, token } = useAuth()
+    
+    
 
     if (!token && !user) {
         return <Navigate to="/login" replace />
