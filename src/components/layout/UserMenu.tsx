@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+/* import { useNavigate } from "react-router-dom" */
 import { useAuth } from "@/context/AuthContext"
 import { useTranslation } from "react-i18next"
 import {
-    Settings,
+    /* Settings, */
     LogOut,
     ChevronDown
 } from 'lucide-react'
@@ -13,7 +13,7 @@ import {
 
 export default function UserMenu(){
     const { t } = useTranslation()
-    const navigate = useNavigate()
+    /* const navigate = useNavigate() */
     const { user, logout } = useAuth()
     const [open, setOpen] = useState<boolean>(false)
     const menuRef = useRef<HTMLDivElement | null>(null)
@@ -83,7 +83,7 @@ export default function UserMenu(){
                     ${open ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'}
                 `}>
                     
-                    <button 
+                    {/* <button 
                         onClick={()=>{
                             navigate('/settings')
                             setOpen(false)
@@ -91,7 +91,7 @@ export default function UserMenu(){
                         className="flex w-full items-center gap-3 px-4 py-3 hover:bg-slate-100 cursor-pointer">
                         <Settings size={18}/>   
                         Settings
-                    </button>
+                    </button> */}
 
                     <hr/>
 

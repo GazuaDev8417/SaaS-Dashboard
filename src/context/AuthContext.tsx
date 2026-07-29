@@ -40,18 +40,22 @@ export function AuthProvider({ children }:{ children:ReactNode}){
     useEffect(() => {
         async function loadUser() {
             const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token')
+            if(!storedToken){
+                setIsLoading(false)
+                return
+            }
             
-            if (storedToken) {
-                try {      
-                    setToken(storedToken)
-                    
-                    const userData = await authService.getCurrentUser()
-                    setUser(userData)
-                } catch (e: any) {
-                    console.error("Session load failed:", e?.response?.data?.message || e?.message)
-                    logout()
-                } 
-            }          
+            try {      
+                setToken(storedToken)
+                
+                const userData = await authService.getCurrentUser()
+                setUser(userData)
+            } catch (e: any) {
+                console.error("Session load failed:", e?.response?.data?.message || e?.message)
+                logout()
+            }finally{
+                setIsLoading(false)
+            }
         }
 
         loadUser()
