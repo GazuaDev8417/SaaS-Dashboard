@@ -20,7 +20,6 @@ interface FormData{
 export default function LoginPage(){
     const { login, token } = useAuth()
     const navigate = useNavigate()
-    const [checked, setChecked] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [form, setForm] =useState<FormData>({
         email: 'admin@example.com',

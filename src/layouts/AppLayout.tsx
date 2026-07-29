@@ -1,5 +1,4 @@
 import { useAuth } from "@/context/AuthContext"
-import LoginPage from "@/pages/login/LoginPage"
 import { Outlet } from "react-router-dom"
 import Header from "../components/layout/Header"
 import Sidebar from "../components/layout/Sidebar"
@@ -7,7 +6,7 @@ import Sidebar from "../components/layout/Sidebar"
 
 
 export default function AppLayout(){
-    const { user, token, isLoading } = useAuth()
+    const { isLoading } = useAuth()
 
     if (isLoading) {
         return (
@@ -16,11 +15,7 @@ export default function AppLayout(){
         </div>
         )
     }
-
-
-    if (!token || !user) {
-        return <LoginPage />
-    }
+    
 
 
     return(

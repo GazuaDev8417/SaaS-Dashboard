@@ -31,50 +31,45 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }:{ children:ReactNode}){
     const [user, setUser] = useState<User | null>(null)
-    const [token, setToken] = useState<string | null>(localStorage.getItem('token'))
+    const [token, setToken] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
 
 
     useEffect(() => {
         async function loadUser() {
-            if (!token) {
-                setIsLoading(false)
-                return
+            const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token')
+            
+            if (storedToken) {
+                try {                    
+                    const userData = await authService.getCurrentUser()
+                    setUser(userData)
+                    setToken(storedToken)
+                } catch (e:any) {
+                    console.error(e?.response?.data?.message || e?.response?.data || e?.message)
+                    logout()
+                } 
             }
-
-            try {
-                const userData = await authService.getCurrentUser()
-                setUser(userData)
-            } catch (e:any) {
-                console.error(e?.response?.data?.message || e?.response?.data || e?.message)
-                logout()
-            } finally {
-                setIsLoading(false)
-            }
+            
+            setIsLoading(false)            
         }
 
         loadUser()
-    }, [token])
+    }, [])
 
 
 
     const login = async(credentials: { email:string, password:string, rememberMe?:boolean })=>{
         const data = await authService.login(credentials)
-        
         const storage = credentials.rememberMe ? localStorage : sessionStorage
-        const alternativeStorage = credentials.rememberMe ? sessionStorage : localStorage
-
-        alternativeStorage.removeItem('token')
+        
         storage.setItem('token', data.token)
-
-        setToken(data.token)
-        setUser(data.user)
     }
 
 
     const logout = ()=>{
         localStorage.removeItem('token')
+        sessionStorage.removeItem('token')
         setToken(null)
         setUser(null)
     }

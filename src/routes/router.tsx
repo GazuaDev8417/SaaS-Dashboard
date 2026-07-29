@@ -19,7 +19,7 @@ interface ProtectedRouteProps{
 
 
 function ProtectedRoute({ children }:ProtectedRouteProps){
-    const { token, isLoading } = useAuth()
+    const { user, token, isLoading } = useAuth()
 
     if (isLoading) {
         return (
@@ -29,7 +29,7 @@ function ProtectedRoute({ children }:ProtectedRouteProps){
         )
     }
 
-    if (!token) {
+    if (!token && !user) {
         return <Navigate to="/login" replace />
     }
 

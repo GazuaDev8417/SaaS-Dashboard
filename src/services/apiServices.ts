@@ -18,7 +18,7 @@ export interface DashboardStatistics{
 
 export interface RecentOrder {
   id: number
-  customer: string
+  customerName: string
   product: string
   total: string
   status: 'completed' | 'pending'

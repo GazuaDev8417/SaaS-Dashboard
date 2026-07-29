@@ -17,6 +17,7 @@ export default function RecentOrdersTable(){
     useEffect(()=>{
         orderService.getRecent().then(data=>{
             setOrders(data)
+            
         }).catch((e:any)=>{
             toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
         }).finally(() => setLoading(false))
@@ -47,7 +48,7 @@ export default function RecentOrdersTable(){
                             key={order.id}
                             className="border-b border-slate-100">
                             
-                            <td className="py-4">{order.customer}</td>
+                            <td className="py-4">{order.customerName}</td>
                             <td className="py-4">{t(order.product)}</td>
                             <td className="py-4">{order.total}</td>
 
