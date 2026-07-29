@@ -1,6 +1,6 @@
 import { Pencil, Trash2 } from "lucide-react"
 import ProductsStatusBadge from "./productsStatusBadge"
-import type { Product } from "@/constants/products"
+import type { Product } from "@/services/apiServices"
 import { useTranslation } from "react-i18next"
 
 

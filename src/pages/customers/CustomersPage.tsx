@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { customerService } from "@/services/apiServices"
-import type { Customer } from "@/constants/customers"
+import type { Customer } from "@/services/apiServices"
 import CustomersToolbar from "@/components/customers/CustomersToolbar"
 import CustomersTable from "@/components/customers/CustomersTable"
 import CustomerModal, { type CustomerFormData } from "@/components/customers/CustomerModal"

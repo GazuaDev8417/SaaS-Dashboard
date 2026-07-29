@@ -30,13 +30,6 @@ export default function PreferencesForm(){
                     <div>
                         <TimezoneSettings/>
                     </div>
-                    {/* <div>
-                        <label className="mb-2 block">{t('Timezone')}</label>
-                        <select className="w-full rounded-lg border border-slate-300 p-3">
-                                <option value="">UTC</option>
-                                <option value="">GMT-5</option>
-                        </select>
-                    </div> */}
                 </div>
             </div>
         </section>

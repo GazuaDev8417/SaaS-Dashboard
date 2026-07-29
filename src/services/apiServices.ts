@@ -21,7 +21,7 @@ export interface RecentOrder {
   customerName: string
   product: string
   total: string
-  status: 'completed' | 'pending'
+  status: 'Active' | 'Inactive'
 }
 
 export interface OrdersByMonth {

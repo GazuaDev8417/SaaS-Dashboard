@@ -1,9 +1,9 @@
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { custom, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Button from "@/components/ui/Button"
-import type { Customer } from "@/constants/customers"
+import type { Customer } from "@/services/apiServices"
 
 
 const customerSchema = z.object({
@@ -55,7 +55,12 @@ export default function CustomerModal({
 
     useEffect(()=>{
         if(customer){
-            reset(customer)
+            reset({
+                name: customer.name,
+                email: customer.email,
+                phone: customer.phone,
+                status: customer.status === 'Inactive' ? 'Inactive' : 'Active'
+            })
         }else{
             reset({
                 name: "",

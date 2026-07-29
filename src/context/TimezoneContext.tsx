@@ -1,5 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { useTranslation } from "react-i18next"
+import { createContext, useContext, useState, type ReactNode } from "react"
 
 
 interface TimezoneContextType {
@@ -11,7 +10,6 @@ const TimezoneContext = createContext<TimezoneContextType | undefined>(undefined
 
 
 export function TimezoneProvider({ children }: { children:ReactNode}){
-    const { t } = useTranslation()
     const [timezone, setTimezoneState] = useState<string>(()=>{
         return localStorage.getItem('app_timezone') || Intl.DateTimeFormat().resolvedOptions().timeZone
     })

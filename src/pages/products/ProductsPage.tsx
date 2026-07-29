@@ -64,7 +64,7 @@ export default function ProductsPage(){
             toast.success('Product created successfully')
             setIsModalOpen(false)
             loadProducts()
-        }catch(e){
+        }catch(error:any){
             toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
         }
     }
@@ -77,7 +77,7 @@ export default function ProductsPage(){
             setIsModalOpen(false)
             setEditingProduct(null)
             loadProducts()
-        }catch(e){
+        }catch(error:any){
             toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
         }
     }
@@ -96,7 +96,7 @@ export default function ProductsPage(){
             await productService.delete(productToDelete.id)
             toast.success('Product deleted successfully')
             loadProducts()
-        }catch(e){
+        }catch(error:any){
             toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
         }finally{
             setProductToDelete(null)
