@@ -56,7 +56,7 @@ export default function RecentOrdersTable(){
 
                             <td>
                                 <span className={
-                                    order.status === 'completed'
+                                    order.status === 'Active'
                                     ? 'rounded-full bg-green-100 px-3 py-1 text-sm text-green-700'
                                     : 'rounded-full bg-yellow-100 px-3 py-1 text-sm text-yellow-700'
                                 }>
