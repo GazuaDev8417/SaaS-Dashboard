@@ -18,7 +18,7 @@ interface FormData{
 
 
 export default function LoginPage(){
-    const { login, token } = useAuth()
+    const { login, token, revertPassword } = useAuth()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [form, setForm] =useState<FormData>({
@@ -57,6 +57,18 @@ export default function LoginPage(){
             setIsLoading(false)
         }
     }
+
+
+    const resetPasswordToDefault = async()=>{
+        try{
+            await revertPassword()
+            toast.success('The credentials have been reset to default')
+        }catch(error:any){
+            const message = error?.response?.data?.message || error?.response?.data || error?.message
+            toast.error(message)
+        }
+    }
+
 
 
 
@@ -158,12 +170,10 @@ export default function LoginPage(){
                             </label>
 
                             <button
-                                onClick={()=>{
-                                    alert('Password recovery is not available in the demo version.')
-                                }}
+                                onClick={resetPasswordToDefault}
                                 type="button"
                                 className="text-blue-600 hover:text-blue-700 cursor-pointer">
-                                Forgot password?
+                                Reset credentials
                             </button>
                         </div>
 

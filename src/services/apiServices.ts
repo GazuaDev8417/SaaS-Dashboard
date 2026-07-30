@@ -21,7 +21,7 @@ export interface RecentOrder {
   customerName: string
   product: string
   total: string
-  status: 'Active' | 'Inactive'
+  status: 'Pending' | 'Completed'
 }
 
 export interface OrdersByMonth {
@@ -74,6 +74,11 @@ export const authService = {
     changePassword: async(password: { currentPassword:string, newPassword:string })=>{
         const response = await api.put('/auth/password', password)
         return response.data
+    },
+
+    resetPassword: async()=>{
+      const response = await api.put('/auth/reset-to-default')
+      return response.data
     }
 }
 

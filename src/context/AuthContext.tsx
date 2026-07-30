@@ -22,6 +22,7 @@ type AuthContextType = {
     logout: () => void
     updateProfile: (data: { name: string; email: string; role: string }) => Promise<void>
     updatePassword: (passwords: { currentPassword: string; newPassword: string }) => Promise<void>
+    revertPassword: () => Promise<void>
 }
 
 
@@ -95,6 +96,11 @@ export function AuthProvider({ children }:{ children:ReactNode}){
     )
 
 
+    const revertPassword = async()=>{
+        await authService.resetPassword()
+    }
+
+
 
     return(
         <AuthContext.Provider value={{ 
@@ -104,7 +110,8 @@ export function AuthProvider({ children }:{ children:ReactNode}){
             login,
             logout,
             updateProfile,
-            updatePassword 
+            updatePassword,
+            revertPassword
         }}>
             {children}
         </AuthContext.Provider>

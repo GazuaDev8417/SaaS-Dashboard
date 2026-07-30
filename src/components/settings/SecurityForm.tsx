@@ -30,7 +30,8 @@ export default function SecurityForm() {
         }
 
         if(password !== confirmPassword){
-            toast(t('The password and its confirmation do not match'))
+            toast.error(t('The password and its confirmation do not match'))
+            return
         }
 
         try{
