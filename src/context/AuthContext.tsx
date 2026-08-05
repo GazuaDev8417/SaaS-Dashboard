@@ -69,7 +69,7 @@ export function AuthProvider({ children }:{ children:ReactNode}){
         const data = await authService.login(credentials)
         const storage = credentials.rememberMe ? localStorage : sessionStorage
         
-        storage.setItem('token', data.token)
+        storage.setItem('token', data)
 
         const userData = await authService.getCurrentUser()
         setToken(data.token)

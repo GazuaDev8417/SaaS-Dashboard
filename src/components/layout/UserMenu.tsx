@@ -13,7 +13,6 @@ import {
 
 export default function UserMenu(){
     const { t } = useTranslation()
-    /* const navigate = useNavigate() */
     const { user, logout } = useAuth()
     const [open, setOpen] = useState<boolean>(false)
     const menuRef = useRef<HTMLDivElement | null>(null)

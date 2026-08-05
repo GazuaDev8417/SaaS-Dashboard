@@ -117,13 +117,13 @@ export default function ProductsPage(){
                         {t('Manage your products and inventory')}
                     </p>
                 </div>
-                <Button
+                {/* <Button
                     onClick={() => setIsModalOpen(true)}>
                     <div className="flex items-center gap-2">
                         <Plus size={18}/>
                         <span>{t('Add Product')}</span>
                     </div>
-                </Button>
+                </Button> */}
             </div>
             <ProductsToolBar
                 search={search}

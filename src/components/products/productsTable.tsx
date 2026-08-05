@@ -25,7 +25,7 @@ export default function ProductsTable({ products, onEdit, onDelete }:ProductsTab
                         <th>{t('Price')}</th>
                         <th>{t('Stock')}</th>
                         <th>{t('Status')}</th>
-                        <th>{t('Actions')}</th>
+                        {/* <th>{t('Actions')}</th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +43,7 @@ export default function ProductsTable({ products, onEdit, onDelete }:ProductsTab
                                 <ProductsStatusBadge
                                     status={t(product.status) as 'Active' | 'Inactive' | 'Low Stock'}/>
                             </td>
-                            <td>
+                            {/* <td>
                                 <div className="flex gap-3">
                                     <button 
                                         className="text-blue-600 cursor-pointer"
@@ -58,7 +58,7 @@ export default function ProductsTable({ products, onEdit, onDelete }:ProductsTab
                                             size={18}/>
                                     </button>
                                 </div>
-                            </td>
+                            </td> */}
                            </tr>
                     ))}
                 </tbody>

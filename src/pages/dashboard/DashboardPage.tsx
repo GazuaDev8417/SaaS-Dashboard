@@ -25,6 +25,7 @@ export default function DashboardPage(){
     const getStatistics = async()=>{
         try{
             const statistics = await dashboardService.getStatistics()
+            
             setData(statistics)
         }catch(e:any){
             toast.error(e?.response?.data?.message || e?.response?.data || e?.message)

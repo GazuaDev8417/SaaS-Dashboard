@@ -46,18 +46,18 @@ export default function CustomersPage(){
 
 
     const handleAddCustomer = async(formData:CustomerFormData)=>{
-        try{
+        /* try{
             await customerService.create(formData)
             toast.success(t("Customer added successfully!"))
             fetchCustomers()
         }catch(e:any){
             toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
-        }
+        } */
     }
     
 
     const handleUpdateCustomer = async(customer:Customer)=>{
-        try{
+        /* try{
             await customerService.update(customer.id, {
                 name: customer.name,
                 email: customer.email,
@@ -68,7 +68,7 @@ export default function CustomersPage(){
             fetchCustomers()
         }catch(e:any){
             toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
-        }
+        } */
     }
 
 
@@ -81,7 +81,7 @@ export default function CustomersPage(){
     const confirmDeleteCustomer = async()=>{
         if(!customerToDelete) return
 
-        try{
+        /* try{
             await customerService.delete(customerToDelete.id)
             toast.success(t("Customer deleted successfully!"))
             setCustomers((prev) => prev.filter((c) => c.id !== customerToDelete.id))
@@ -90,7 +90,7 @@ export default function CustomersPage(){
         }finally{
             setCustomerToDelete(null)
             setIsDeleteOpen(false)
-        }
+        } */
     }
 
 

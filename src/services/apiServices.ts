@@ -17,11 +17,15 @@ export interface DashboardStatistics{
 }
 
 export interface RecentOrder {
-  id: number
-  customerName: string
-  product: string
-  total: string
+  id:string
+  product:string 
+  price:number
+  quantity:number
+  total:number
+  moment:string 
+  client:string
   status: 'Pending' | 'Completed'
+  customerName:string
 }
 
 export interface OrdersByMonth {
@@ -46,7 +50,7 @@ export interface NotificationsSettingsData{
 }
 
 export interface Customer{
-    id: number
+    id: string
     name: string
     email: string
     phone: string
@@ -108,7 +112,7 @@ export const productService = {
 
 export const dashboardService = {
   getStatistics: async()=>{
-    const response = await api.get<DashboardStatistics[]>('/dashboard/statistics')
+    const response = await api.get<DashboardStatistics[]>('/analytics/revenue')
     return response.data
   }
 }
@@ -128,11 +132,11 @@ export const orderService = {
 
 export const customerService = {
     getAll: async () => {
-        const response = await api.get<Customer[]>("/customers")
+        const response = await api.get<Customer[]>("/users")
         return response.data
     },
 
-    create: async (data: { name: string; email: string; phone: string; status?: string }) => {
+    /* create: async (data: { name: string; email: string; phone: string; status?: string }) => {
         const response = await api.post("/customers", data)
         return response.data
     },
@@ -145,7 +149,7 @@ export const customerService = {
     delete: async (id: number) => {
         const response = await api.delete(`/customers/${id}`)
         return response.data
-    }
+    } */
 }
 
 
