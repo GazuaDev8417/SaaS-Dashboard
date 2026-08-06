@@ -6,7 +6,6 @@ import ProductsTable from "@/components/products/productsTable"
 import ProductModal from "@/components/products/ProductModal"
 import type { ProductFormData } from "@/components/products/ProductModal"
 import { Plus } from "lucide-react"
-import ConfirmDialog from "@/components/common/ConfirmDialog"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 
@@ -58,18 +57,6 @@ export default function ProductsPage(){
     })
 
 
-    const handleAddProduct = async(productData:ProductFormData)=>{
-        try{
-            await productService.create(productData)
-            toast.success('Product created successfully')
-            setIsModalOpen(false)
-            loadProducts()
-        }catch(error:any){
-            toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
-        }
-    }
-
-
     const handleUpdateProduct = async(productData:Product)=>{
         try{
             await productService.update(productData.id, productData)
@@ -87,22 +74,6 @@ export default function ProductsPage(){
         setProductToDelete(product)
         setIsDeleteOpen(true)
     }
-
-
-    const confirmDeleteProduct = async()=>{
-        if(!productToDelete) return
-        
-        try{
-            await productService.delete(productToDelete.id)
-            toast.success('Product deleted successfully')
-            loadProducts()
-        }catch(error:any){
-            toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
-        }finally{
-            setProductToDelete(null)
-            setIsDeleteOpen(false)
-        }
-    }
     
     
 
@@ -117,13 +88,13 @@ export default function ProductsPage(){
                         {t('Manage your products and inventory')}
                     </p>
                 </div>
-                {/* <Button
+                <Button
                     onClick={() => setIsModalOpen(true)}>
                     <div className="flex items-center gap-2">
                         <Plus size={18}/>
                         <span>{t('Add Product')}</span>
                     </div>
-                </Button> */}
+                </Button>
             </div>
             <ProductsToolBar
                 search={search}
@@ -150,18 +121,8 @@ export default function ProductsPage(){
                     setIsModalOpen(false)
                     setEditingProduct(null)
                 }}
-                onAddProduct={handleAddProduct}
                 onUpdateProduct={handleUpdateProduct}
                 product={editingProduct}/>
-            <ConfirmDialog
-                open={isDeleteOpen}
-                title="Delete Product"
-                message={`Are you sure you want to delete "${productToDelete?.name}"?`}
-                onCancel={()=>{
-                    setIsDeleteOpen(false)
-                    setProductToDelete(null)
-                }}
-                onConfirm={confirmDeleteProduct} />
         </section>
     )
 }

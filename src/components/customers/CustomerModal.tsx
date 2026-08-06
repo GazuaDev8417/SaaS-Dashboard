@@ -9,8 +9,7 @@ import type { Customer } from "@/services/apiServices"
 const customerSchema = z.object({
     name: z.string().min(3, 'Name is required'),
     email: z.email('Invalid email'),
-    phone: z.string().min(8, 'Phone is required'),
-    status: z.enum(['Active', 'Inactive'])
+    phone: z.string().min(8, 'Phone is required')
 })
 
 export type CustomerFormData = z.output<typeof customerSchema>
@@ -19,7 +18,6 @@ interface CustomerModalProps{
     open:boolean
     customer:Customer | null
     onClose: () => void
-    onAddCustomer: (customer:CustomerFormData) => void
     onUpdateCustomer: (customer:Customer) => void
 }
 
@@ -29,7 +27,6 @@ export default function CustomerModal({
     open,
     customer,
     onClose,
-    onAddCustomer,
     onUpdateCustomer
 }:CustomerModalProps){
 
@@ -47,8 +44,7 @@ export default function CustomerModal({
         defaultValues: {
             name: "",
             email: "",
-            phone: "",
-            status: "Active",
+            phone: ""
         },
     })
 
@@ -56,17 +52,15 @@ export default function CustomerModal({
     useEffect(()=>{
         if(customer){
             reset({
-                name: customer.name,
+                name: customer.username,
                 email: customer.email,
-                phone: customer.phone,
-                status: customer.status === 'Inactive' ? 'Inactive' : 'Active'
+                phone: customer.phone
             })
         }else{
             reset({
                 name: "",
                 email: "",
-                phone: "",
-                status: "Active"
+                phone: ""
             })
         }
     }, [customer, reset])
@@ -81,8 +75,6 @@ export default function CustomerModal({
                 ...customer,
                 ...data
             })
-        }else{
-            onAddCustomer(data)
         }
 
         reset()
@@ -138,15 +130,6 @@ export default function CustomerModal({
                             {errors.phone.message}
                         </p>
                     )}
-
-                    <select
-                        {...register("status")}
-                        className="w-full rounded-lg border border-slate-300 p-3"
-                    >
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
-                    </select>
-
                     <div className="flex justify-end gap-3 pt-4">
 
                         <button

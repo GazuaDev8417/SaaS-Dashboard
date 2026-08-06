@@ -4,7 +4,6 @@ import type { Customer } from "@/services/apiServices"
 import CustomersToolbar from "@/components/customers/CustomersToolbar"
 import CustomersTable from "@/components/customers/CustomersTable"
 import CustomerModal, { type CustomerFormData } from "@/components/customers/CustomerModal"
-import ConfirmDialog from "@/components/common/ConfirmDialog"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 
@@ -19,8 +18,6 @@ export default function CustomersPage(){
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null)
-    const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-    const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null)
     const [search, setSearch] = useState('')
     
 
@@ -43,17 +40,7 @@ export default function CustomersPage(){
     useEffect(()=>{
         fetchCustomers()
     }, [])
-
-
-    const handleAddCustomer = async(formData:CustomerFormData)=>{
-        /* try{
-            await customerService.create(formData)
-            toast.success(t("Customer added successfully!"))
-            fetchCustomers()
-        }catch(e:any){
-            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
-        } */
-    }
+    
     
 
     const handleUpdateCustomer = async(customer:Customer)=>{
@@ -70,33 +57,11 @@ export default function CustomersPage(){
             toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
         } */
     }
-
-
-    const handleDeleteCustomer = (customer:Customer)=>{
-        setCustomerToDelete(customer)
-        setIsDeleteOpen(true)
-    }
-
-
-    const confirmDeleteCustomer = async()=>{
-        if(!customerToDelete) return
-
-        /* try{
-            await customerService.delete(customerToDelete.id)
-            toast.success(t("Customer deleted successfully!"))
-            setCustomers((prev) => prev.filter((c) => c.id !== customerToDelete.id))
-        }catch(e:any){
-            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
-        }finally{
-            setCustomerToDelete(null)
-            setIsDeleteOpen(false)
-        } */
-    }
-
+    
 
     const filteredCustomers = customers.filter(
         (c) =>
-        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.username.toLowerCase().includes(search.toLowerCase()) ||
         c.email.toLowerCase().includes(search.toLowerCase())
     )
 
@@ -133,7 +98,6 @@ export default function CustomersPage(){
                         setEditingCustomer(customer)
                         setIsModalOpen(true)
                     }}
-                    onDelete={handleDeleteCustomer}
                 />
             )}
 
@@ -144,19 +108,7 @@ export default function CustomersPage(){
                     setIsModalOpen(false)
                     setEditingCustomer(null)
                 }}
-                onAddCustomer={handleAddCustomer}
                 onUpdateCustomer={handleUpdateCustomer}
-            />
-
-            <ConfirmDialog
-                open={isDeleteOpen}
-                title={t("Delete Customer")}
-                message={`Delete "${customerToDelete?.name}"`}
-                onCancel={()=>{
-                    setCustomerToDelete(null)
-                    setIsDeleteOpen(false)
-                }}
-                onConfirm={confirmDeleteCustomer}
             />
         </section>
     )

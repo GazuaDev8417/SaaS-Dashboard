@@ -25,7 +25,7 @@ export default function ProductsTable({ products, onEdit, onDelete }:ProductsTab
                         <th>{t('Price')}</th>
                         <th>{t('Stock')}</th>
                         <th>{t('Status')}</th>
-                        {/* <th>{t('Actions')}</th> */}
+                        <th>{t('Actions')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,22 +43,14 @@ export default function ProductsTable({ products, onEdit, onDelete }:ProductsTab
                                 <ProductsStatusBadge
                                     status={t(product.status) as 'Active' | 'Inactive' | 'Low Stock'}/>
                             </td>
-                            {/* <td>
-                                <div className="flex gap-3">
-                                    <button 
-                                        className="text-blue-600 cursor-pointer"
-                                        onClick={() => onEdit(product)}>
-                                        <Pencil
-                                            size={18}/>
-                                    </button>
-                                    <button
-                                        className="text-red-600 cursor-pointer"
-                                        onClick={() => onDelete(product)}>
-                                        <Trash2
-                                            size={18}/>
-                                    </button>
-                                </div>
-                            </td> */}
+                            <td>
+                                <button 
+                                    className="text-blue-600 cursor-pointer"
+                                    onClick={() => onEdit(product)}>
+                                    <Pencil
+                                        size={18}/>
+                                </button>
+                            </td>
                            </tr>
                     ))}
                 </tbody>

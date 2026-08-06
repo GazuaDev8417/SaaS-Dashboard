@@ -51,7 +51,7 @@ export interface NotificationsSettingsData{
 
 export interface Customer{
     id: string
-    name: string
+    username: string
     email: string
     phone: string
     status: string
@@ -61,12 +61,12 @@ export interface Customer{
 //================== SERVICES ======================================
 export const authService = {
     login: async(credentials: { email:string, password:string })=>{
-        const response = await api.post('/auth/login', credentials)
+        const response = await api.post('/restaurants/login', credentials)
         return response.data
     },
     
     getCurrentUser: async()=>{
-        const response = await api.get('/auth/me')
+        const response = await api.get('/restaurants')
         return response.data
     },
 
@@ -89,22 +89,12 @@ export const authService = {
 
 export const productService = {
     getAll: async()=>{
-        const response = await api.get<Product[]>('/products')
-        return response.data
-    },
-
-    create: async(data: { name:string, category:string, price:number, stock:number })=>{
-        const response = await api.post('/products', data)
+        const response = await api.get<Product[]>('/restaurants/products')
         return response.data
     },
 
     update: async(id:number, data: { name:string, category:string, price:number, stock:number})=>{
         const response = await api.put(`/products/${id}`, data)
-        return response.data
-    },
-
-    delete: async(id:number)=>{
-        const response = await api.delete(`/products/${id}`)
         return response.data
     }
 }
@@ -112,7 +102,7 @@ export const productService = {
 
 export const dashboardService = {
   getStatistics: async()=>{
-    const response = await api.get<DashboardStatistics[]>('/analytics/revenue')
+    const response = await api.get<DashboardStatistics[]>('/statistics/revenue')
     return response.data
   }
 }
@@ -120,7 +110,7 @@ export const dashboardService = {
 
 export const orderService = {
   getRecent: async () => {
-    const response = await api.get<RecentOrder[]>("/orders/recent")
+    const response = await api.get<RecentOrder[]>("/orders/all")
     return response.data
   },
   getByMonth: async () => {
@@ -136,26 +126,16 @@ export const customerService = {
         return response.data
     },
 
-    /* create: async (data: { name: string; email: string; phone: string; status?: string }) => {
-        const response = await api.post("/customers", data)
-        return response.data
-    },
-
     update: async (id: number, data: { name: string; email: string; phone: string; status: string }) => {
         const response = await api.put(`/customers/${id}`, data)
         return response.data
-    },
-
-    delete: async (id: number) => {
-        const response = await api.delete(`/customers/${id}`)
-        return response.data
-    } */
+    }
 }
 
 
 export const analyticsService = {
   getRevenue: async () => {
-    const response = await api.get<RevenueData[]>("/analytics/revenue")
+    const response = await api.get<RevenueData[]>("/statistics/revenue")
     return response.data
   },
 

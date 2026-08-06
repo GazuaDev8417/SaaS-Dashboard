@@ -1,2 +1,4 @@
 Notification menu in the Header is still in pure frontend. It must to have a connexion to the API and fetch the notifications
-to frontend in the NOtificationMenu component
+to frontend in the NOtificationMenu component.
+
+to target the request to the corresponding endpoints

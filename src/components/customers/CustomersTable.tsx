@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from 'lucide-react'
+import { Pencil } from 'lucide-react'
 import type { Customer } from '@/services/apiServices'
 import { useTranslation } from 'react-i18next'
 
@@ -6,14 +6,12 @@ import { useTranslation } from 'react-i18next'
 interface CustomersTableProps{
     customers:Customer[]
     onEdit:(customer:Customer) => void
-    onDelete:(customer:Customer) => void
 }
 
 
 export default function CustomersTable({
     customers,
-    onEdit,
-    onDelete
+    onEdit
 }:CustomersTableProps){
     const { t } = useTranslation()
     if(customers.length === 0){
@@ -42,7 +40,6 @@ export default function CustomersTable({
                         <th className="px-6 py-4">{t('Customer')}</th>
                         <th className="px-6 py-4">{t('Email')}</th>
                         <th className="px-6 py-4">{t('Phone')}</th>
-                        <th className="px-6 py-4">{t('Status')}</th>
                         <th className="px-6 py-4 text-center">
                             {t('Actions')}
                         </th>
@@ -66,7 +63,7 @@ export default function CustomersTable({
 
                                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
 
-                                        {customer.name
+                                        {customer.username
                                             .split(" ")
                                             .map((name) => name[0])
                                             .join("")
@@ -74,7 +71,7 @@ export default function CustomersTable({
 
                                     </div>
 
-                                    <span>{customer.name}</span>
+                                    <span>{customer.username}</span>
 
                                 </div>
 
@@ -90,20 +87,6 @@ export default function CustomersTable({
 
                             <td className="px-6 py-4">
 
-                                <span
-                                    className={
-                                        customer.status === "Active"
-                                            ? "rounded-full bg-green-100 px-3 py-1 text-sm text-green-700"
-                                            : "rounded-full bg-red-100 px-3 py-1 text-sm text-red-700"
-                                    }
-                                >
-                                    {customer.status}
-                                </span>
-
-                            </td>
-
-                            <td className="px-6 py-4">
-
                                 <div className="flex justify-center gap-2">
 
                                     <button
@@ -111,13 +94,6 @@ export default function CustomersTable({
                                         className="rounded-lg p-2 text-blue-600 hover:bg-blue-50 cursor-pointer"
                                     >
                                         <Pencil size={18} />
-                                    </button>
-
-                                    <button
-                                        onClick={() => onDelete(customer)}
-                                        className="rounded-lg p-2 text-red-600 hover:bg-red-50 cursor-pointer"
-                                    >
-                                        <Trash2 size={18} />
                                     </button>
 
                                 </div>

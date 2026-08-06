@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next"
 interface ProductModalProps{
     open:boolean
     onClose: () => void
-    onAddProduct: (product: ProductFormData) => void
     product:Product | null
     onUpdateProduct: (product:Product) => void
 }
@@ -31,7 +30,6 @@ export type ProductFormData = z.output<typeof productSchema>
 export default function ProductModal({
     open,
     onClose,
-    onAddProduct,
     onUpdateProduct,
     product
 }:ProductModalProps){
@@ -86,8 +84,6 @@ export default function ProductModal({
                 ...data,
                 status: data.stock > 5 ? 'Active' : 'Low Stock'
             })
-        }else{
-            onAddProduct(data)
         }
 
         reset()
