@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from "lucide-react"
+import { Pencil } from "lucide-react"
 import ProductsStatusBadge from "./productsStatusBadge"
 import type { Product } from "@/services/apiServices"
 import { useTranslation } from "react-i18next"
@@ -8,12 +8,11 @@ import { useTranslation } from "react-i18next"
 interface ProductsTableProps{
     products:Product[]
     onEdit: (product:Product) => void
-    onDelete: (product:Product) => void
 }
 
 
 
-export default function ProductsTable({ products, onEdit, onDelete }:ProductsTableProps){
+export default function ProductsTable({ products, onEdit }:ProductsTableProps){
     const { t } = useTranslation()
     return(
         <div className="overflow-x-auto">

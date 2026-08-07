@@ -3,7 +3,6 @@ import { customerService } from "@/services/apiServices"
 import type { Customer } from "@/services/apiServices"
 import CustomersToolbar from "@/components/customers/CustomersToolbar"
 import CustomersTable from "@/components/customers/CustomersTable"
-import CustomerModal, { type CustomerFormData } from "@/components/customers/CustomerModal"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 
@@ -41,22 +40,6 @@ export default function CustomersPage(){
         fetchCustomers()
     }, [])
     
-    
-
-    const handleUpdateCustomer = async(customer:Customer)=>{
-        /* try{
-            await customerService.update(customer.id, {
-                name: customer.name,
-                email: customer.email,
-                phone: customer.phone,
-                status: customer.status
-            })
-            toast.success(t("Customer updated successfully!"))
-            fetchCustomers()
-        }catch(e:any){
-            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
-        } */
-    }
     
 
     const filteredCustomers = customers.filter(
@@ -100,16 +83,6 @@ export default function CustomersPage(){
                     }}
                 />
             )}
-
-            <CustomerModal
-                open={isModalOpen}
-                customer={editingCustomer}
-                onClose={()=>{
-                    setIsModalOpen(false)
-                    setEditingCustomer(null)
-                }}
-                onUpdateCustomer={handleUpdateCustomer}
-            />
         </section>
     )
 }

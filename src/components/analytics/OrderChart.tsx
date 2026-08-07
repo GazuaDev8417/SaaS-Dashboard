@@ -18,6 +18,10 @@ import { toast } from "sonner"
 export default function OrdersChart() {
     const { t } = useTranslation()
     const [chartData, setChartData] = useState<OrdersByMonth[]>([])
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+        "Jul", "Aug", "Sep", "Oct", "Nove", "Dec"
+    ]
 
 
 
@@ -25,7 +29,7 @@ export default function OrdersChart() {
         orderService.getByMonth().then(data=>{
             const translatedData = data.map(item=>({
                 ...item,
-                month: t(item.month)
+                month: t(months[Number(item.month.split('-')[1]) - 1])
             }))
             setChartData(translatedData)
         }).catch((e:any)=>{

@@ -51,8 +51,6 @@ export interface Customer{
     username: string
     email: string
     phone: string
-    status: string
-    createdAt?: string
 }
 
 //================== SERVICES ======================================
@@ -91,7 +89,7 @@ export const productService = {
     },
 
     update: async(id:number, data: { name:string, category:string, price:number, stock:number})=>{
-        const response = await api.put(`/products/${id}`, data)
+        const response = await api.put(`restaurants/product/${id}`, data)
         return response.data
     }
 }
@@ -121,11 +119,6 @@ export const customerService = {
     getAll: async () => {
         const response = await api.get<Customer[]>("/users")
         return response.data
-    },
-
-    update: async (id: number, data: { name: string; email: string; phone: string; status: string }) => {
-        const response = await api.put(`/customers/${id}`, data)
-        return response.data
     }
 }
 
@@ -136,8 +129,13 @@ export const analyticsService = {
     return response.data
   },
 
+  getGrowth: async()=>{
+    const response = await api.get<DashboardStatistics[]>('statistics/revenue-growth')
+    return response.data
+  },
+
   getCategories: async () => {
-    const response = await api.get<CategoryData[]>("/analytics/categories")
+    const response = await api.get<CategoryData[]>("/categories")
     return response.data
   }
 }

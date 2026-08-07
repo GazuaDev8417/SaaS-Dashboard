@@ -59,11 +59,31 @@ export default function ProductsPage(){
 
     const handleUpdateProduct = async(productData:Product)=>{
         try{
-            await productService.update(productData.id, productData)
-            toast.success('Product updated successfully')
-            setIsModalOpen(false)
-            setEditingProduct(null)
-            loadProducts()
+
+            if(productData.stock === 0){
+                toast('Once the stock has depleted the product will no longer be visible in client platform', {
+                    action: {
+                        label: 'Confirm',
+                        onClick: async()=>{
+                            await productService.update(productData.id, productData)
+                            toast.success('Product updated successfully')
+                            setIsModalOpen(false)
+                            setEditingProduct(null)
+                            loadProducts()
+                        }
+                    },
+                    cancel: {
+                        label: 'Cancel',
+                        onClick: () => toast.success('Update was canceled') 
+                    }
+                })
+            }else{
+                await productService.update(productData.id, productData)
+                toast.success('Product updated successfully')
+                setIsModalOpen(false)
+                setEditingProduct(null)
+                loadProducts()
+            }
         }catch(error:any){
             toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
         }
@@ -112,8 +132,7 @@ export default function ProductsPage(){
                     onEdit={(product)=>{
                         setEditingProduct(product)
                         setIsModalOpen(true)
-                    }}
-                    onDelete={handleOpenDeleteModal}/>
+                    }}/>
             )}
             <ProductModal 
                 open={isModalOpen} 

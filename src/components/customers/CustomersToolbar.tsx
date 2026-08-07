@@ -36,12 +36,12 @@ export default function CustomersToolbar({
 
             </div>
 
-            <Button onClick={onAddCustomer}>
+            {/* <Button onClick={onAddCustomer}>
                 <div className="flex items-center gap-2">
                     <Plus size={18} />
                     <span>{t('Add Customer')}</span>
                 </div>
-            </Button>
+            </Button> */}
 
         </div>
     )

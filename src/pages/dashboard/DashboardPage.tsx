@@ -39,7 +39,7 @@ export default function DashboardPage(){
                         <StatCard
                             key={stat.title}
                             title={t(stat.title)}
-                            value={stat.value}/>
+                            value={stat.title === 'Revenue' ? `R$ ${stat.value}` : stat.value}/>
                     ))}
                 </div>
             <DashboardWidget title="Revenue Overview">

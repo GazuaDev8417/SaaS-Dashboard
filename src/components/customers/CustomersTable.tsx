@@ -40,9 +40,6 @@ export default function CustomersTable({
                         <th className="px-6 py-4">{t('Customer')}</th>
                         <th className="px-6 py-4">{t('Email')}</th>
                         <th className="px-6 py-4">{t('Phone')}</th>
-                        <th className="px-6 py-4 text-center">
-                            {t('Actions')}
-                        </th>
 
                     </tr>
 
@@ -86,18 +83,6 @@ export default function CustomersTable({
                             </td>
 
                             <td className="px-6 py-4">
-
-                                <div className="flex justify-center gap-2">
-
-                                    <button
-                                        onClick={() => onEdit(customer)}
-                                        className="rounded-lg p-2 text-blue-600 hover:bg-blue-50 cursor-pointer"
-                                    >
-                                        <Pencil size={18} />
-                                    </button>
-
-                                </div>
-
                             </td>
 
                         </tr>
