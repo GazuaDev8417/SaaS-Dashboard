@@ -123,6 +123,7 @@ export default function ProductsPage(){
                 onCategoryChange={setCategory}
                 status={status}
                 onStatusChange={setStatus}
+                categories={Array.from(new Set(products.map(p => p.category)))}
                 />
             {loading ? (
                 <div className="p-8 text-center text-slate-500">Loading products...</div>

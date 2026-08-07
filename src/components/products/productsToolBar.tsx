@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next"
 
 
 
-
 interface ProductsToolBarProps{
     search:string
     onSearchChange: (value:string) => void
@@ -13,6 +12,8 @@ interface ProductsToolBarProps{
 
     status:string
     onStatusChange: (value:string) => void
+
+    categories: string[]
 }
 
 
@@ -22,7 +23,8 @@ export default function ProductsToolBar({
     category,
     onCategoryChange,
     status,
-    onStatusChange
+    onStatusChange,
+    categories
 }:ProductsToolBarProps){
     const { t } = useTranslation()
 
@@ -47,8 +49,9 @@ export default function ProductsToolBar({
                     onChange={(e) => onCategoryChange(e.target.value)}
                     className="rounded-lg border border-slate-300 px-3 py-2">
                     <option value="">{t('All Categories')}</option>
-                    <option value="Electronics">{t('Electronics')}</option>
-                    <option value="Accessories">{t('Accessories')}</option>
+                    {categories.map(cat=>(
+                        <option key={cat} value={cat}>{cat}</option>
+                    ))}
                 </select>
 
                 <select 
