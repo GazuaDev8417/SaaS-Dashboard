@@ -18,14 +18,11 @@ export interface DashboardStatistics{
 
 export interface RecentOrder {
   id:string
-  product:string 
-  price:number
+  username:string
+  product:string
   quantity:number
   total:number
-  moment:string 
-  client:string
-  status: 'Pending' | 'Completed'
-  customerName:string
+  state: 'REQUESTED' | 'FINISHED'
 }
 
 export interface OrdersByMonth {
@@ -110,7 +107,7 @@ export const dashboardService = {
 
 export const orderService = {
   getRecent: async () => {
-    const response = await api.get<RecentOrder[]>("/orders/all")
+    const response = await api.get<RecentOrder[]>("/orders/recent")
     return response.data
   },
   getByMonth: async () => {
@@ -135,7 +132,7 @@ export const customerService = {
 
 export const analyticsService = {
   getRevenue: async () => {
-    const response = await api.get<RevenueData[]>("/statistics/revenue")
+    const response = await api.get<RevenueData[]>("/statistics/revenue-month")
     return response.data
   },
 

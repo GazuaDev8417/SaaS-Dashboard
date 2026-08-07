@@ -22,6 +22,7 @@ export default function RevenueChart(){
 
     useEffect(()=>{
         analyticsService.getRevenue().then(res=>{
+            console.log(res)
             const translated = res.map(item=>({
                 ...item,
                 month: t(item.month)

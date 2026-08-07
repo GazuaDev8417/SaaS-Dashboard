@@ -21,7 +21,6 @@ export default function DashboardPage(){
     }, [])
 
 
-
     const getStatistics = async()=>{
         try{
             const statistics = await dashboardService.getStatistics()

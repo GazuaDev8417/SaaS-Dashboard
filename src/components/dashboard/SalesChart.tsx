@@ -18,13 +18,17 @@ import { toast } from 'sonner'
 export default function SalesChart(){
     const { t } = useTranslation()
     const [data, setData] = useState<RevenueData[]>([])
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+        "Jul", "Aug", "Sep", "Oct", "Nove", "Dec"
+    ]
 
 
     useEffect(()=>{
         analyticsService.getRevenue().then(res=>{
             const translated = res.map(item=>({
                 ...item,
-                month: t(item.month)
+                month: t(months[Number(item.month.split('/')[0]) -1])
             }))
             setData(translated)
         }).catch((e:any)=>{

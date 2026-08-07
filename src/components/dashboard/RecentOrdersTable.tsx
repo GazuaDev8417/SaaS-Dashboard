@@ -49,17 +49,17 @@ export default function RecentOrdersTable(){
                             key={order.id}
                             className="border-b border-slate-100">
                             
-                            <td className="py-4">{order.customerName}</td>
+                            <td className="py-4">{order.username}</td>
                             <td className="py-4">{t(order.product)}</td>
                             <td className="py-4">$ {order.total}</td>
 
                             <td>
                                 <span className={
-                                    order.status === 'Completed'
+                                    order.state === 'FINISHED'
                                     ? 'rounded-full bg-green-100 px-3 py-1 text-sm text-green-700'
                                     : 'rounded-full bg-yellow-100 px-3 py-1 text-sm text-yellow-700'
                                 }>
-                                    {t(order.status)}
+                                    {t(order.state === 'REQUESTED' ? 'Pending' : 'Completed')}
                                 </span>
                             </td>
 
