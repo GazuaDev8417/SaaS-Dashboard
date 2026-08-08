@@ -18,6 +18,17 @@ export default function SettingsPage(){
 
 
 
+    const formatPhoneNumber = (phone?:string)=>{
+        const digits = (phone ?? '').replace(/\D/g, '')
+
+        if(digits.length <= 10){
+            return digits.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3')
+        }
+
+        return digits.replace(/^(\d{2})(\d{5})(\d{0,4})$/, '($1) $2-$3')
+    }
+
+
 
     return(
         <section className="space-y-8">
@@ -42,22 +53,32 @@ export default function SettingsPage(){
                         <Pencil className="w-5 h-5 cursor-pointer" />
                     </button>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-3 text-sm">
-                    <div>
-                        <span className="block text-slate-400 font-medium">{t('Name')}</span>
-                        <span className="text-slate-700 font-semibold">{user?.name || '-'}</span>
+                {user && (
+                    <div className="grid gap-4 sm:grid-cols-3 text-sm">
+                        <div>
+                            <span className="block text-slate-400 font-medium">{t('Name')}</span>
+                            <span className="text-slate-700 font-semibold">{user.name}</span>
+                        </div>
+                        <div>
+                            <span className="block text-slate-400 font-medium">{t('Email')}</span>
+                            <span className="text-slate-700 font-semibold">{user.email}</span>
+                        </div>
+                        <div>
+                            <span className="block text-slate-400 font-medium">{t('Role')}</span>
+                            <span className="text-slate-700 font-semibold">{user.role}</span>
+                        </div>
+                        <div>
+                            <span className="block text-slate-400 font-medium">{t('Phone')}</span>
+                            <span className="text-slate-700 font-semibold">{user.phone}</span>
+                        </div>
+                        <div>
+                            <span className="block text-slate-400 font-medium">{t('Address')}</span>
+                            <span className="text-slate-700 font-semibold">{user.address}</span>
+                        </div>
                     </div>
-                    <div>
-                        <span className="block text-slate-400 font-medium">{t('Email')}</span>
-                        <span className="text-slate-700 font-semibold">{user?.email || '-'}</span>
-                    </div>
-                    <div>
-                        <span className="block text-slate-400 font-medium">{t('Role')}</span>
-                        <span className="text-slate-700 font-semibold">{user?.role || '-'}</span>
-                    </div>
-                </div>
+                )}
             </div>
-            <div className="grid gap-8 xl:grid-cols-2">
+            <div>
                 <PreferencesForm/>
                 {/* <NotificationSettings/> */}
             </div>

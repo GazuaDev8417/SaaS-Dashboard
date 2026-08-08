@@ -5,13 +5,11 @@ import { useTranslation } from 'react-i18next'
 
 interface CustomersTableProps{
     customers:Customer[]
-    onEdit:(customer:Customer) => void
 }
 
 
 export default function CustomersTable({
-    customers,
-    onEdit
+    customers
 }:CustomersTableProps){
     const { t } = useTranslation()
     if(customers.length === 0){
@@ -28,10 +26,24 @@ export default function CustomersTable({
         )
     }
 
+
+
+    const formatPhoneNumber = (phone:string)=>{
+        const digits = phone?.replace(/\D/g, '')
+
+        if(digits.length <= 10){
+            return digits.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3')
+        }
+
+        return digits.replace(/^(\d{2})(\d{5})(\d{0,4})$/, '($1) $2-$3')
+    }
+
+    
+
     return(
         <div className="overflow-x-auto">
 
-            <table className="w-full">
+            <table className="min-w-full">
 
                 <thead className="bg-slate-50">
 
@@ -79,7 +91,7 @@ export default function CustomersTable({
                             </td>
 
                             <td className="px-6 py-4">
-                                {customer.phone}
+                                {formatPhoneNumber(customer.phone)}
                             </td>
 
                             <td className="px-6 py-4">

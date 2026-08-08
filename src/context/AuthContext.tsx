@@ -9,9 +9,8 @@ type User = {
     name:string
     email:string
     role:string
-    emailNotifs?: boolean
-    pushNotifs?: boolean
-    marketingEmails?: boolean
+    phone:string
+    address:string
 }
 
 type AuthContextType = {
@@ -20,7 +19,7 @@ type AuthContextType = {
     isLoading: boolean
     login: (credentials: { email: string; password: string }) => Promise<void>
     logout: () => void
-    updateProfile: (data: { name: string; email: string; role: string }) => Promise<void>
+    updateProfile: (data: { name: string; phone:string; role: string; address:string }) => Promise<void>
     updatePassword: (passwords: { currentPassword: string; newPassword: string }) => Promise<void>
     revertPassword: () => Promise<void>
 }
@@ -85,7 +84,7 @@ export function AuthProvider({ children }:{ children:ReactNode}){
     }
 
 
-    const updateProfile = async(data: { name:string, email:string, role:string })=>{
+    const updateProfile = async(data: { name:string, phone:string, role:string, address:string })=>{
         const updatedUser = await authService.updateProfile(data)
         setUser(updatedUser)
     }

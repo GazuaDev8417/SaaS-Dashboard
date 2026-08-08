@@ -3,6 +3,7 @@ import { customerService } from "@/services/apiServices"
 import type { Customer } from "@/services/apiServices"
 import CustomersToolbar from "@/components/customers/CustomersToolbar"
 import CustomersTable from "@/components/customers/CustomersTable"
+import DashboardWidget from "@/components/dashboard/DashboardWidget"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 
@@ -75,14 +76,12 @@ export default function CustomersPage(){
                     {t("Loading customers...")}
                 </div>
             ) : (
-                <CustomersTable
-                    customers={filteredCustomers}
-                    onEdit={(customer) => {
-                        setEditingCustomer(customer)
-                        setIsModalOpen(true)
-                    }}
-                />
+                <DashboardWidget title="Customers Table">
+                    <CustomersTable
+                        customers={filteredCustomers}/>
+                </DashboardWidget>
             )}
+            <></>
         </section>
     )
 }

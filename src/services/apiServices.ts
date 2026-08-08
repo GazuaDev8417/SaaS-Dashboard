@@ -66,8 +66,8 @@ export const authService = {
         return response.data
     },
 
-    updateProfile: async(data: { name:string, email:string, role:string })=>{
-        const response = await api.put('/auth/profile', data)
+    updateProfile: async(data: { name:string, phone:string, role:string, address:string })=>{
+        const response = await api.put('/restaurants/update', data)
         return response.data
     },
 
@@ -149,7 +149,6 @@ export const settingsService = {
   },
 
   updateAll: async () => {
-    console.log('Here at least')
     const response = await api.put<NotificationsSettingsData[]>(`/notifications/update/all`)
     return response.data
   },

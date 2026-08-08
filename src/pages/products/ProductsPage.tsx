@@ -6,6 +6,7 @@ import ProductsTable from "@/components/products/productsTable"
 import ProductModal from "@/components/products/ProductModal"
 import type { ProductFormData } from "@/components/products/ProductModal"
 import { Plus } from "lucide-react"
+import DashboardWidget from "@/components/dashboard/DashboardWidget"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 
@@ -128,12 +129,14 @@ export default function ProductsPage(){
             {loading ? (
                 <div className="p-8 text-center text-slate-500">Loading products...</div>
             ) : (
-                <ProductsTable 
-                    products={filteredProducts}
-                    onEdit={(product)=>{
-                        setEditingProduct(product)
-                        setIsModalOpen(true)
-                    }}/>
+                <DashboardWidget title="Products Table">
+                    <ProductsTable 
+                        products={filteredProducts}
+                        onEdit={(product)=>{
+                            setEditingProduct(product)
+                            setIsModalOpen(true)
+                        }}/>
+                </DashboardWidget>
             )}
             <ProductModal 
                 open={isModalOpen} 
