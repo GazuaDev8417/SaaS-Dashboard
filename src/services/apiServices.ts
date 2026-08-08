@@ -41,9 +41,10 @@ export interface CategoryData {
 }
 
 export interface NotificationsSettingsData{
-  emailNotifs: boolean
-  pushNotifs: boolean
-  marketingEmails: boolean
+  id:string
+  message:string
+  created_at:string
+  is_read:boolean
 }
 
 export interface Customer{
@@ -142,13 +143,19 @@ export const analyticsService = {
 
 
 export const settingsService = {
-  updateNotifications: async (data: { emailNotifs: boolean; pushNotifs: boolean; marketingEmails: boolean }) => {
-    const response = await api.put<NotificationsSettingsData>("/settings/notifications", data)
+  updateNotifications: async (id:string) => {
+    const response = await api.put<NotificationsSettingsData>(`/notifications/update/${id}`)
+    return response.data
+  },
+
+  updateAll: async () => {
+    console.log('Here at least')
+    const response = await api.put<NotificationsSettingsData[]>(`/notifications/update/all`)
     return response.data
   },
 
   getNotifications: async()=>{
-    const response = await api.get<NotificationsSettingsData>('/settings/notifications')
+    const response = await api.get<NotificationsSettingsData[]>('/notifications')
     return response.data
   }
 }

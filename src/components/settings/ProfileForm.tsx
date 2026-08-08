@@ -7,7 +7,7 @@ import { toast } from "sonner"
 
 
 
-export default function ProfileForm(){
+export default function ProfileForm({ onSuccess }: { onSuccess?: () => void }){
     const { updateProfile, user } = useAuth()
     const [name, setName] = useState<string>(user?.name ?? '')
     const [email, setEmail] = useState<string>(user?.email ?? '')
@@ -29,6 +29,7 @@ export default function ProfileForm(){
         try{
             await updateProfile({name, email, role})
             toast.success('User updated successfully')
+            onSuccess?.()
         }catch(e:any){
             toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
         }

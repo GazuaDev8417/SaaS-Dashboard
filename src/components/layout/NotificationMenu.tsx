@@ -1,18 +1,14 @@
-import { Bell, CheckCircle2, Package, UserPlus } from "lucide-react"
 import { useEffect, useState, useRef, type ReactNode } from "react"
+import { settingsService, type NotificationsSettingsData } from "@/services/apiServices"
+import { Bell, CheckCircle2, Package, UserPlus } from "lucide-react"
+import { useTranslation } from "react-i18next"
+import { toast } from "sonner"
 
 
 
-interface Notification{
-    id:number
-    icon:ReactNode
-    title:string
-    time:string
-    unread?:boolean
-}
+
 
 interface NotificationItemProps{
-    icon:ReactNode
     title:string
     time:string
     unread?:boolean
@@ -23,31 +19,26 @@ interface NotificationItemProps{
 
 
 export default function NotificationMenu(){
+    const { t } = useTranslation()
     const menuRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState<boolean>(false)
-    const [notifications, setNotifications] = useState<Notification[]>([
-        {
-            id: 1,
-            icon: <UserPlus size={18} />,
-            title: "New customer registered",
-            time: "2 min ago",
-            unread: true,
-        },
-        {
-            id: 2,
-            icon: <Package size={18} />,
-            title: "Product stock updated",
-            time: "12 min ago",
-            unread: true,
-        },
-        {
-            id: 3,
-            icon: <CheckCircle2 size={18} />,
-            title: "Monthly report generated",
-            time: "1 hour ago",
-            unread: false,
-        },
-    ])
+    const [notifications, setNotifications] = useState<NotificationsSettingsData[]>([])
+
+
+
+
+
+    useEffect(()=>{
+        async function loadNotifications(){
+            try{
+                const data = await settingsService.getNotifications()
+                setNotifications(data)
+            }catch(e:any){
+                toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+            }
+        }
+        loadNotifications()
+    }, [t])
 
 
 
@@ -77,21 +68,44 @@ export default function NotificationMenu(){
     }, [])
 
 
-    function handleNotificationClick(id:number){
-        setNotifications(current =>
-            current.map(notification =>
-                notification.id === id
-                    ? {
-                        ...notification,
-                        unread: false
-                    } : notification
+    async function handleNotificationClick(id:string){
+        try{
+            await settingsService.updateNotifications(id)
+
+            setNotifications(current =>
+                current.map(notification =>
+                    notification.id === id
+                        ? { ...notification, is_read: true }
+                        : notification
+                )
             )
-        )
+        }catch(e:any){
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        }
+        
     }
 
 
-    const unreadCount = notifications.filter(notification => notification.unread).length
-    const hasUnread = notifications.some(notification => notification.unread)
+    async function handleMarkAllAsRead(){
+        try{
+            await settingsService.updateAll()
+
+            setNotifications(current =>
+                    current.map(notification => ({
+                        ...notification,
+                        is_read: true
+                    })
+                )
+            )
+        }catch(e:any){
+            toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
+        }
+    }
+
+ 
+    const unreadCount = notifications.filter(notification => !notification.is_read).length
+    const hasUnread = notifications.some(notification => !notification.is_read)
+    
 
 
     return(
@@ -141,15 +155,7 @@ export default function NotificationMenu(){
                     {hasUnread && (
                         <button
                             className="text-sm font-medium text-blue-600 hover:text-blue-700 cursor-pointer"
-                            onClick={()=>
-                                setNotifications(current =>
-                                    current.map(notification => ({
-                                        ...notification,
-                                        unread: false
-                                    })
-                                )
-                            )
-                        }>Mark all as read</button>
+                            onClick={handleMarkAllAsRead}>Mark all as read</button>
                     )}
                 </div>
 
@@ -158,10 +164,9 @@ export default function NotificationMenu(){
                         notifications.map((notification)=>(
                         <NotificationItem
                             key={notification.id}
-                            icon={notification.icon}
-                            title={notification.title}
-                            time={notification.time}
-                            unread={notification.unread}
+                            title={notification.message}
+                            time={notification.created_at}
+                            unread={!notification.is_read}
                             onClick={() => handleNotificationClick(notification.id)}/>
                         ))
                     ) : (
@@ -182,14 +187,11 @@ export default function NotificationMenu(){
 }
 
 
-function NotificationItem({ icon, title, time, unread = false, onClick }:NotificationItemProps){
+function NotificationItem({ title, time, unread = false, onClick }:NotificationItemProps){
     return(
         <div
             onClick={onClick} 
             className="flex gap-3 px-4 py-4 transition hover:bg-slate-50">
-            <div className="mt-1 text-blue-600">
-                {icon}
-            </div>
 
             <div className="flex flex-1 justify-between">
                 <div>
@@ -197,7 +199,7 @@ function NotificationItem({ icon, title, time, unread = false, onClick }:Notific
                         {title}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">
-                        {time}
+                        {new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})}
                     </p>
                 </div>
                 {unread && (
