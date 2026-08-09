@@ -19,7 +19,7 @@ type AuthContextType = {
     isLoading: boolean
     login: (credentials: { email: string; password: string }) => Promise<void>
     logout: () => void
-    updateProfile: (data: { name: string; phone:string; role: string; address:string }) => Promise<void>
+    updateProfile: (data: { name: string; phone:string; address:string }) => Promise<void>
     updatePassword: (passwords: { currentPassword: string; newPassword: string }) => Promise<void>
     revertPassword: () => Promise<void>
 }
@@ -85,7 +85,7 @@ export function AuthProvider({ children }:{ children:ReactNode}){
     }
 
 
-    const updateProfile = async(data: { name:string, phone:string, role:string, address:string })=>{
+    const updateProfile = async(data: { name:string, phone:string, address:string })=>{
         await authService.updateProfile(data) 
         loadUser()
     }

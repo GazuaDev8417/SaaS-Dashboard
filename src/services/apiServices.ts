@@ -66,18 +66,18 @@ export const authService = {
         return response.data
     },
 
-    updateProfile: async(data: { name:string, phone:string, role:string, address:string })=>{
+    updateProfile: async(data: { name:string, phone:string, address:string })=>{
         const response = await api.put('/restaurants/update', data)
         return response.data
     },
 
     changePassword: async(password: { currentPassword:string, newPassword:string })=>{
-        const response = await api.put('/auth/password', password)
+        const response = await api.patch('/restaurants/password/update', password)
         return response.data
     },
 
     resetPassword: async()=>{
-      const response = await api.put('/auth/reset-to-default')
+      const response = await api.post('/restaurants/password/reset-request')
       return response.data
     }
 }

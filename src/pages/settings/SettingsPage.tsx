@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useAuth } from "@/context/AuthContext"
 import ProfileForm from "@/components/settings/ProfileForm"
 import PreferencesForm from "@/components/settings/PreferencesForm"
-import NotificationSettings from "@/components/settings/NotificationSettings"
 import SecurityForm from "@/components/settings/SecurityForm"
 import { useTranslation } from "react-i18next"
 import { Pencil } from "lucide-react"
@@ -69,7 +68,7 @@ export default function SettingsPage(){
                         </div>
                         <div>
                             <span className="block text-slate-400 font-medium">{t('Phone')}</span>
-                            <span className="text-slate-700 font-semibold">{user.phone}</span>
+                            <span className="text-slate-700 font-semibold">{formatPhoneNumber(user.phone)}</span>
                         </div>
                         <div>
                             <span className="block text-slate-400 font-medium">{t('Address')}</span>
@@ -80,9 +79,9 @@ export default function SettingsPage(){
             </div>
             <div>
                 <PreferencesForm/>
-                {/* <NotificationSettings/> */}
             </div>
-            <SecurityForm/>
+            {/* <SecurityForm/> */}
+            
             {isProfileModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
                     <div className="bg-white rounded-xl shadow-xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto">

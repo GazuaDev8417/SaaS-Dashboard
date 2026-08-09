@@ -10,7 +10,6 @@ import { toast } from "sonner"
 export default function ProfileForm({ onSuccess }: { onSuccess?: () => void }){
     const { updateProfile, user } = useAuth()
     const [name, setName] = useState<string>(user?.name ?? '')
-    const [role, setRole] = useState<string>(user?.role ?? '')
     const [phone, setPhone] = useState<string>(user?.phone ?? '')
     const [address, setAddress] = useState<string>(user?.address ?? '')
     const { t } = useTranslation()
@@ -20,7 +19,6 @@ export default function ProfileForm({ onSuccess }: { onSuccess?: () => void }){
     useEffect(() => {
         if(user){
             setName(user.name)
-            setRole(user.role)
             setPhone(user.phone)
             setAddress(user.address)
         }
@@ -49,9 +47,9 @@ export default function ProfileForm({ onSuccess }: { onSuccess?: () => void }){
     }
     
 
-    const handleUpdate = async(name:string, phone:string, role:string, address:string)=>{
+    const handleUpdate = async(name:string, phone:string, address:string)=>{
         try{
-            await updateProfile({name, phone, role, address})
+            await updateProfile({name, phone, address})
             toast.success('User updated successfully')
             onSuccess?.()
         }catch(e:any){
@@ -82,12 +80,6 @@ export default function ProfileForm({ onSuccess }: { onSuccess?: () => void }){
                 </div>
             </div>
             <div className="mt-5">
-                <label className="mb-2 block text-sm font-medium">{t('Role')}</label>
-                <input
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-3"/>
-
                 <label className="mb-2 block text-sm font-medium">{t('Phone')}</label>
                 <input
                     value={phone}
@@ -103,7 +95,7 @@ export default function ProfileForm({ onSuccess }: { onSuccess?: () => void }){
                     className="w-full rounded-lg border border-slate-300 p-3"/>
             </div>
             <div className="mt-6 flex justify-end">
-                <Button onClick={() => handleUpdate(name, phone, role, address)}>
+                <Button onClick={() => handleUpdate(name, phone, address)}>
                     {t('Save Profile')}
                 </Button>
             </div>

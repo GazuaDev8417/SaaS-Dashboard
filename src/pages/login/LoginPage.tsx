@@ -18,7 +18,7 @@ interface FormData{
 
 
 export default function LoginPage(){
-    const { login, token, revertPassword } = useAuth()
+    const { login, token } = useAuth()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [form, setForm] =useState<FormData>({
@@ -59,15 +59,15 @@ export default function LoginPage(){
     }
 
 
-    const resetPasswordToDefault = async()=>{
-        try{
-            await revertPassword()
-            toast.success('The credentials have been reset to default')
-        }catch(error:any){
-            const message = error?.response?.data?.message || error?.response?.data || error?.message
-            toast.error(message)
-        }
-    }
+    // const resetPasswordToDefault = async()=>{
+    //     try{
+    //         await revertPassword()
+    //         toast.success('The credentials have been reset to default')
+    //     }catch(error:any){
+    //         const message = error?.response?.data?.message || error?.response?.data || error?.message
+    //         toast.error(message)
+    //     }
+    // }
 
 
 
@@ -169,12 +169,12 @@ export default function LoginPage(){
                                 Remember me
                             </label>
 
-                            <button
+                            {/* <button
                                 onClick={resetPasswordToDefault}
                                 type="button"
                                 className="text-blue-600 hover:text-blue-700 cursor-pointer">
                                 Reset credentials
-                            </button>
+                            </button> */}
                         </div>
 
                         <Button

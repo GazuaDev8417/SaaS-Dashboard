@@ -9,8 +9,7 @@
     "Starter Plan": "Plano Inicial",
     "Business Plan": "Plano de Negócios",
     "Enterprise Plan": "Plano Corporativo",
-
-    
+        
 
     "Products": "Produtos",
     "Manage your products and inventory": "Gerencie seus produtos e inventário",
@@ -74,6 +73,7 @@
     "Profile": "Perfil",
     "Full Name": "Nome Completo",
     "Role": "Cargo",
+    "Address": "Endereço",
     "Save Profile": "Salvar Perfil",
     "Preferences": "Preferências",
     "Timezone": "Fuso Horário",
