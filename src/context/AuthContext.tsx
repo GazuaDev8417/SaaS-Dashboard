@@ -38,7 +38,12 @@ export function AuthProvider({ children }:{ children:ReactNode}){
 
 
     useEffect(() => {
-        async function loadUser() {
+        loadUser()
+    }, [])
+
+
+    
+    async function loadUser() {
             const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token')
             if(!storedToken){
                 setIsLoading(false)
@@ -57,10 +62,6 @@ export function AuthProvider({ children }:{ children:ReactNode}){
                 setIsLoading(false)
             }
         }
-
-        loadUser()
-    }, [])
-    
 
 
 
@@ -85,8 +86,8 @@ export function AuthProvider({ children }:{ children:ReactNode}){
 
 
     const updateProfile = async(data: { name:string, phone:string, role:string, address:string })=>{
-        const updatedUser = await authService.updateProfile(data)
-        setUser(updatedUser)
+        await authService.updateProfile(data) 
+        loadUser()
     }
 
 
