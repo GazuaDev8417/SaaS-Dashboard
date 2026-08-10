@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react"
 import { productService, type Product } from "@/services/apiServices"
-import Button from "@/components/ui/Button"
 import ProductsToolBar from "@/components/products/productsToolBar"
 import ProductsTable from "@/components/products/productsTable"
 import ProductModal from "@/components/products/ProductModal"
-import type { ProductFormData } from "@/components/products/ProductModal"
-import { Plus } from "lucide-react"
 import DashboardWidget from "@/components/dashboard/DashboardWidget"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
@@ -22,8 +19,6 @@ export default function ProductsPage(){
     const [category, setCategory] = useState<string>('')
     const [status, setStatus] = useState<string>('')
     const [editingProduct, setEditingProduct] = useState<Product | null>(null)
-    const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-    const [productToDelete, setProductToDelete] = useState<Product | null>(null)
 
 
 
@@ -89,12 +84,6 @@ export default function ProductsPage(){
             toast.error(error?.response?.data?.message || error?.response?.data || error?.message)
         }
     }
-
-
-    const handleOpenDeleteModal = (product:Product)=>{
-        setProductToDelete(product)
-        setIsDeleteOpen(true)
-    }
     
     
 
@@ -109,13 +98,6 @@ export default function ProductsPage(){
                         {t('Manage your products and inventory')}
                     </p>
                 </div>
-                {/* <Button
-                    onClick={() => setIsModalOpen(true)}>
-                    <div className="flex items-center gap-2">
-                        <Plus size={18}/>
-                        <span>{t('Add Product')}</span>
-                    </div>
-                </Button> */}
             </div>
             <ProductsToolBar
                 search={search}

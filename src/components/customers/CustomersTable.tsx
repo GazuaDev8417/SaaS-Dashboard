@@ -1,4 +1,3 @@
-import { Pencil } from 'lucide-react'
 import type { Customer } from '@/services/apiServices'
 import { useTranslation } from 'react-i18next'
 

@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, type ReactNode } from "react"
+import { useEffect, useState, useRef } from "react"
 import { settingsService, type NotificationsSettingsData } from "@/services/apiServices"
-import { Bell, CheckCircle2, Package, UserPlus } from "lucide-react"
+import { Bell } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
 
@@ -15,7 +15,7 @@ interface NotificationItemProps{
     onClick: () => void
 }
 
-
+const VITE_ORDER_NOTIFICATION_URL = import.meta.env.VITE_ORDER_NOTIFICATION_URL
 
 
 export default function NotificationMenu(){
@@ -23,9 +23,7 @@ export default function NotificationMenu(){
     const menuRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState<boolean>(false)
     const [notifications, setNotifications] = useState<NotificationsSettingsData[]>([])
-
-
-
+    
 
 
     useEffect(()=>{
@@ -68,7 +66,7 @@ export default function NotificationMenu(){
     }, [])
 
 
-    async function handleNotificationClick(id:string){
+    async function handleNotificationClick(id:string, message:string){
         try{
             await settingsService.updateNotifications(id)
 
@@ -79,10 +77,13 @@ export default function NotificationMenu(){
                         : notification
                 )
             )
+
+            if(message.startsWith('An order for') ||  message.startsWith('New order placed')){
+                window.open(VITE_ORDER_NOTIFICATION_URL, '_blank')
+            }
         }catch(e:any){
             toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
-        }
-        
+        }        
     }
 
 
@@ -167,7 +168,7 @@ export default function NotificationMenu(){
                             title={notification.message}
                             time={notification.created_at}
                             unread={!notification.is_read}
-                            onClick={() => handleNotificationClick(notification.id)}/>
+                            onClick={() => handleNotificationClick(notification.id, notification.message)}/>
                         ))
                     ) : (
                         <div className="px-4 py-8 text-center text-sm text-slate-500">
@@ -175,12 +176,7 @@ export default function NotificationMenu(){
                         </div>
                     )}
                 </div>
-                <div className="border-t px-4 py-3 text-center">
-                    <button
-                        className="text-sm font-medium text-blue-600 hover:text-blue-700 cursor-pointer">
-                        View all notifications
-                    </button>
-                </div>
+                <div className="border-t px-4 py-3 text-center"/>
             </div>
         </div>    
     )

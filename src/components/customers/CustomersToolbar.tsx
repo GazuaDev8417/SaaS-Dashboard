@@ -1,5 +1,4 @@
-import { Search, Plus } from 'lucide-react'
-import Button from '@/components/ui/Button'
+import { Search } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 
@@ -7,14 +6,12 @@ import { useTranslation } from 'react-i18next'
 interface CustomersToolbarProps{
     search:string
     onSearchChange: (value:string) => void
-    onAddCustomer: () => void
 }
 
 
 export default function CustomersToolbar({
     search,
-    onSearchChange,
-    onAddCustomer
+    onSearchChange
 }:CustomersToolbarProps){
     const { t } = useTranslation()
     return(
@@ -35,14 +32,6 @@ export default function CustomersToolbar({
                 />
 
             </div>
-
-            {/* <Button onClick={onAddCustomer}>
-                <div className="flex items-center gap-2">
-                    <Plus size={18} />
-                    <span>{t('Add Customer')}</span>
-                </div>
-            </Button> */}
-
         </div>
     )
 }

@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useAuth } from "@/context/AuthContext"
 import ProfileForm from "@/components/settings/ProfileForm"
 import PreferencesForm from "@/components/settings/PreferencesForm"
-import SecurityForm from "@/components/settings/SecurityForm"
 import { useTranslation } from "react-i18next"
 import { Pencil } from "lucide-react"
 
@@ -80,7 +79,6 @@ export default function SettingsPage(){
             <div>
                 <PreferencesForm/>
             </div>
-            {/* <SecurityForm/> */}
             
             {isProfileModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">

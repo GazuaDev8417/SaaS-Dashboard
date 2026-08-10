@@ -16,8 +16,6 @@ export default function CustomersPage(){
     const { t } = useTranslation()
     const [customers, setCustomers] = useState<Customer[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null)
     const [search, setSearch] = useState('')
     
 
@@ -65,11 +63,7 @@ export default function CustomersPage(){
 
             <CustomersToolbar
                 search={search}
-                onSearchChange={setSearch}
-                onAddCustomer={() => {
-                    setEditingCustomer(null)
-                    setIsModalOpen(true)
-                }}/>
+                onSearchChange={setSearch}/>
             
             {isLoading ? (
                 <div className="rounded-xl bg-white p-12 text-center shadow-sm text-slate-500">
