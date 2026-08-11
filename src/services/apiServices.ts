@@ -62,7 +62,7 @@ export const authService = {
     },
     
     getCurrentUser: async()=>{
-        const response = await api.get('/restaurants')
+        const response = await api.get('/restaurants/profile')
         return response.data
     },
 
