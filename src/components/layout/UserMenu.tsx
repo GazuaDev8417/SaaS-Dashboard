@@ -51,7 +51,7 @@ export default function UserMenu(){
                 onClick={() => setOpen(!open)}
                 className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-slate-100 cursor-pointer">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-indigo-700 text-sm font-bold text-white shadow-md">
-                        FF
+                        {user?.name}
                     </div>
                     <div className="hidden text-left md:block">
                         <p className="text-sm font-semibold">

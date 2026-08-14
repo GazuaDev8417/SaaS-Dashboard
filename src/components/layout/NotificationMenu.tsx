@@ -79,7 +79,11 @@ export default function NotificationMenu(){
             )
 
             if(message.startsWith('An order for') ||  message.startsWith('New order placed')){
-                window.open(VITE_ORDER_NOTIFICATION_URL, '_blank')
+                const decide = window.confirm(
+                    'Attention!\n\nYou will be redirected to the Orders Page of My Delivery Provider app, but you have to be logged in at the same account you are in now to see the notification content.'
+                )
+
+                if(decide) window.open(VITE_ORDER_NOTIFICATION_URL, '_blank')
             }
         }catch(e:any){
             toast.error(e?.response?.data?.message || e?.response?.data || e?.message)
