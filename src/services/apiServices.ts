@@ -42,7 +42,7 @@ export interface CategoryData {
 
 export interface NotificationsSettingsData{
   id:string
-  message:string
+  notification:string
   created_at:string
   is_read:boolean
 }
@@ -144,17 +144,17 @@ export const analyticsService = {
 
 export const settingsService = {
   updateNotifications: async (id:string) => {
-    const response = await api.put<NotificationsSettingsData>(`/notifications/update/${id}`)
+    const response = await api.put<NotificationsSettingsData>(`/provider-notifications/update/${id}`)
     return response.data
   },
 
   updateAll: async () => {
-    const response = await api.put<NotificationsSettingsData[]>(`/notifications/update/all`)
+    const response = await api.put<NotificationsSettingsData[]>(`/provider-notifications/update/all`)
     return response.data
   },
 
   getNotifications: async()=>{
-    const response = await api.get<NotificationsSettingsData[]>('/notifications')
+    const response = await api.get<NotificationsSettingsData[]>('/provider-notifications')
     return response.data
   }
 }

@@ -22,7 +22,7 @@ export default function LoginPage(){
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [form, setForm] =useState<FormData>({
-        email: 'admin@example.com',
+        email: 'admin1@example.com',
         password: 'password123', 
         rememberMe: false
     })

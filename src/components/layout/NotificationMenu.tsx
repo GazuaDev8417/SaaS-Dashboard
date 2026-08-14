@@ -165,10 +165,10 @@ export default function NotificationMenu(){
                         notifications.map((notification)=>(
                         <NotificationItem
                             key={notification.id}
-                            title={notification.message}
+                            title={notification.notification}
                             time={notification.created_at}
                             unread={!notification.is_read}
-                            onClick={() => handleNotificationClick(notification.id, notification.message)}/>
+                            onClick={() => handleNotificationClick(notification.id, notification.notification)}/>
                         ))
                     ) : (
                         <div className="px-4 py-8 text-center text-sm text-slate-500">
