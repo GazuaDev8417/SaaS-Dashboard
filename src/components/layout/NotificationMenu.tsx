@@ -80,7 +80,7 @@ export default function NotificationMenu(){
 
             if(message.startsWith('An order for') ||  message.startsWith('New order placed')){
                 const decide = window.confirm(
-                    'Attention!\n\nYou will be redirected to the Orders Page of My Delivery Provider app, but you have to be logged in at the same account you are in now to see the notification content.'
+                    'Attention!\n\nYou will be redirected to the Orders Page of My Delivery Provider app, but you have to be logged in with the same account you used now to see the notification content.'
                 )
 
                 if(decide) window.open(VITE_ORDER_NOTIFICATION_URL, '_blank')
