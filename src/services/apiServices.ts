@@ -57,27 +57,27 @@ export interface Customer{
 //================== SERVICES ======================================
 export const authService = {
     login: async(credentials: { email:string, password:string })=>{
-        const response = await api.post('/restaurants/login', credentials)
+        const response = await api.post('/providers/login', credentials)
         return response.data
     },
     
     getCurrentUser: async()=>{
-        const response = await api.get('/restaurants/profile')
+        const response = await api.get('/providers/profile')
         return response.data
     },
 
     updateProfile: async(data: { name:string, phone:string, address:string })=>{
-        const response = await api.put('/restaurants/update', data)
+        const response = await api.put('/providers/update', data)
         return response.data
     },
 
     changePassword: async(password: { currentPassword:string, newPassword:string })=>{
-        const response = await api.patch('/restaurants/password/update', password)
+        const response = await api.patch('/providers/password/update', password)
         return response.data
     },
 
     resetPassword: async()=>{
-      const response = await api.post('/restaurants/password/reset-request')
+      const response = await api.post('/providers/password/reset-request')
       return response.data
     }
 }
@@ -85,12 +85,12 @@ export const authService = {
 
 export const productService = {
     getAll: async()=>{
-        const response = await api.get<Product[]>('/restaurants/products')
+        const response = await api.get<Product[]>('/providers/products')
         return response.data
     },
 
     update: async(id:number, data: { name:string, category:string, price:number, stock:number})=>{
-        const response = await api.put(`restaurants/product/${id}`, data)
+        const response = await api.put(`/providers/product/${id}`, data)
         return response.data
     }
 }
