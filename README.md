@@ -1,46 +1,58 @@
-# 📈 SaaS Analytics & Management Dashboard
+# 📈 SaaS Analytics & Control Panel — Business Intelligence Hub
 
 [![Live Demo](https://img.shields.io/badge/Live_App-Try_It_Now-2ea44f?style=for-the-badge&logo=vercel)](https://dashboard-project-nu-one.vercel.app/)
 [![Portfolio](https://img.shields.io/badge/Author-Flamarion_França-007acc?style=for-the-badge&logo=render)](https://portfolio-vtu0.onrender.com)
 
-> **Ecosystem Core:** The *SaaS Dashboard* functions as the overarching Business Intelligence (BI) engine for the platform. It aggregates revenue, transaction volumes, user growth, and merchant performance generated across **[My Delivery](https://my-delivery-silk.vercel.app)** and **[My Delivery Provider](https://my-delivery-provider.vercel.app)**.
+> **Ecosystem Core:** The *SaaS Control Panel* serves as the centralized Business Intelligence (BI) engine of the platform. It aggregates revenue streams, transaction volumes, platform user growth, and merchant performance generated across **[My Delivery](https://my-delivery-silk.vercel.app)** and **[My Delivery Provider](https://my-delivery-provider.vercel.app)**, powered by **My Delivery Server**.
 
 ---
 
 ## ⚡ Interactive Live Demo
 
-Explore the analytics and platform management suite:
+Explore platform analytics and management controls directly in your browser:
 
 * 🌐 **Live SaaS Application:** [https://dashboard-project-nu-one.vercel.app/](https://dashboard-project-nu-one.vercel.app/) 
-* 🌐 **Live My Delivery Application** (source of data analyzed by the SaaS): [https://my-delivery-silk.vercel.app](https://my-delivery-silk.vercel.app)
+* 🛒 **Live Customer Application (Data Source):** [https://my-delivery-silk.vercel.app](https://my-delivery-silk.vercel.app)
 * 💼 **Developer Portfolio:** [https://portfolio-vtu0.onrender.com](https://portfolio-vtu0.onrender.com)
 
-> 💡 **Try this flow:** Navigate through the live analytics overview, adjust internationalization settings (`i18next`), inspect customer management modules, and test schema-validated user settings forms.
+🔑 **Demo Access Credentials:**
+* **Admin 1:** `admin1@example.com` | Password: `password123`
+* **Admin 2:** `admin2@example.com` | Password: `password123`
+
+> 💡 **Suggested Test Flow:** Log in with one of the credentials above, navigate through the live analytics dashboard, test real-time internationalization switching (`i18next`), inspect merchant and customer management modules, and test schema-validated settings forms.
 
 ---
 
-## 🌟 Why Test This Application?
+## 🌟 Technical Highlights & Engineering Decisions
 
-Built using **Vite**, **React**, **TypeScript**, **Tailwind CSS**, and **Zod**, this project demonstrates how to structure large-scale, production-ready enterprise dashboards with strict type safety, modular component architecture, and internationalization:
+Built using **Vite**, **React**, **TypeScript**, **Tailwind CSS**, and **Zod**, this dashboard demonstrates how to architect production-ready enterprise intelligence tools with strict type safety, modular UI systems, and global readiness:
 
-* **⚡ Ultra-Lean Vite + Tailwind Build Engine:** Optimized bundle size with near-instant hot module replacement (HMR) and utility-first responsive layout structures.
-* **🛡️ Type-Safe Form Validation:** Powered by **React Hook Form** and **Zod**, enforcing strict schema validation and runtime type checking for profile and security operations.
-* **🌐 Internationalization (i18n): Language switching between English and Portuguese configured via i18next.
-* **🎨 Scalable Design System:** Reusable UI components built with **Lucide React** icons and modular CSS abstractions to ensure visual consistency across screens.
+* **⚡ Optimized Vite + Tailwind Infrastructure:** Features minimal bundle footprints, instant Hot Module Replacement (HMR), and utility-first responsive layout architecture.
+* **🛡️ Type-Safe Form & Schema Validation:** Leverages **React Hook Form** paired with **Zod** schema inference for strict runtime input checking and error handling across platform configuration panels.
+* **🌐 Enterprise Internationalization (i18n):** Real-time language switching (English and Portuguese) using `i18next` with modular translation namespace loading.
+* **🎨 Scalable Design System:** Reusable, accessible UI components built with **Lucide React** and Tailwind CSS abstractions for visual consistency across complex analytical views.
+* **📊 Ecosystem Data Aggregation:** Designed to ingest, process, and display real-time order volumes, financial tracking, and platform performance metrics.
 
 ---
 
-## 🏛️ Ecosystem Overview
+## 🏛️ Ecosystem Architecture & Data Aggregation
 
 ```text
-   ┌───────────────────────┐         ┌───────────────────────────────┐
-   │      My Delivery      │         │     My Delivery Provider      │
-   │  (Customer Ordering)  │         │    (Merchant Operations)      │
-   └───────────┬───────────┘         └───────────────┬───────────────┘
-               │                                     │
-               └─────────────────┬───────────────────┘
-                                 ▼
-                     ┌───────────────────────┐
-                     │    SaaS Dashboard     │
-                     │  (Analytics & BI Hub) │
-                     └───────────────────────┘
+  ┌───────────────────────────┐         ┌───────────────────────────┐
+  │   My Delivery (Client)    │         │   My Delivery Provider    │
+  │   (Customer Transactions) │         │   (Merchant Operations)   │
+  └─────────────┬─────────────┘         └─────────────┬─────────────┘
+                │                                     │
+                └──────────────────┬──────────────────┘
+                                   │
+                                   ▼
+                      ┌───────────────────────────┐
+                      │    My Delivery Server     │
+                      │     (Centralized API)     │
+                      └────────────┬──────────────┘
+                                   │
+                                   ▼
+                      ┌───────────────────────────┐
+                      │    SaaS Control Panel     │
+                      │   (Analytics & BI Hub)    │
+                      └───────────────────────────┘
